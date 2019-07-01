@@ -1,22 +1,64 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+
+    role_hierarchy:
+        ROLE_MODO: [ROLE_USER]
+        ROLE_ADMIN: [ROLE_MODO]
+
     providers:
-        in_memory: { memory: ~ }
+        chain_provider:
+            chain:
+                providers: [in_memory, database]
+        in_memory:
+            memory:
+                users:
+                    user@admin.com:
+                        password: '$2y$13$IYCYPQcAUUHP83nwcfnK6ud0fIirGM4Y9y3GB5a0CB0PeY/7hL7Ay' #adminpassword
+                        roles: ROLE_USER
+                    admin@admin.com:
+                        password: '$2y$13$IYCYPQcAUUHP83nwcfnK6ud0fIirGM4Y9y3GB5a0CB0PeY/7hL7Ay' #adminpassword
+                        roles: ROLE_SUPER_ADMIN
+        database:
+            entity:
+                class: App\Entity\User
+                property: login
+
+    encoders:
+        Symfony\Component\Security\Core\User\User: bcrypt
+        App\Entity\User: bcrypt
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+            provider: chain_provider
 
             # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            form_login:
+                login_path: app_security_connexion
+                check_path: app_security_connexion
+                username_parameter: email
+                password_parameter: password
+                always_use_default_target_path: true
+                default_target_path: index
+
+
+            logout:
+                path: app_security_logout
+                target: index
+
+
+            # https://symfony.com/doc/current/security/form_login_setup.html
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: [ROLE_SUPER_ADMIN,ROLE_ADMIN] }
+        - { path: ^/modo, roles: ROLE_MODO }
+        - { path: ^/user, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
