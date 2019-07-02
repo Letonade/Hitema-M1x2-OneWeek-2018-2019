@@ -9,35 +9,33 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Date Création</th>
                 <th>Nom Utilisateur</th>
+                <th>Prenom Utilisateur</th>
                 <th>Role</th>
                 <th>Groupe</th>
-                <th>Categorie</th>
-                <th>Groupe</th>
+                <th>Categorie</th> 
                 
             </tr>
         </thead>
         <tbody>
-        {% for user in users %}
+        {% for user in User %}
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ user.username ? user.username : '' }}</td>
+                <td>{{ user.IdTrait }}</td>
+                <td>{{ user.nom ? user.nom : '' }}</td>
+                <td>{{ user.prenom ? user.prenom : '' }}</td>
                 <td>{{ user.role ? user.role : '' }}</td>
-                <td>{{ user.genre ? user.genre : '' }}</td>
                 <td>{{ user.blason ? user.blason : '' }}</td>
                 <td>{{ user.groupe.id ? user.groupe.nom : '' }}</td>
-                <td>{{ user.arme.id ? user.arme.arme : '' }}</td>
+                <td>{{ user.profilCategorie ? user.profilCategorie: '' }}</td>
                 
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">Pas d'entrainements</td>
+                <td colspan="4">Error 404 entrainements not found </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('entrainement_new') }}">Créer un leçon</a>
+    <a href="{{ path('entrainement_new') }}">Créer une entrainement</a>
 {% endblock %}
