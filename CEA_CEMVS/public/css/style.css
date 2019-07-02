@@ -23,6 +23,14 @@ body{
 	width: 100%;
 }
 
-.logoFade{
-	
+.logoSized{
+	display: block;
+	margin: auto;
+	margin-bottom: 20px;
+	height: 200px;
 }
+
+.btn, .required, .card{
+	margin: 5px auto;
+}
+

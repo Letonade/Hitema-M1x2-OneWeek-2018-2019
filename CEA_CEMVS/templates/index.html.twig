@@ -1,4 +1,53 @@
 {% extends 'base.html.twig' %}
+
 {% block body %}
-<div class="logoFade"><img src="{{asset('images/logo_MVDSRetouché.PNG')}}"></div>
+<img class="logoSized" src="{{asset('images/logoRetouche.PNG')}}">
+	<div class="card">
+	  <div class="card-header">
+	    Horaires d'ouverture
+	  </div>
+	  <div class="card-body">
+	    <blockquote class="blockquote mb-0">
+	    	Horaires hors jours férié.
+	    	Ouvert de 10h à 12h30 et de 13h à 17h30 du mardi au vendredi.
+	    	Ouvert de 9h à 12h00 et de 13h à 18h30 le samedi.
+	    	<br>
+	      <footer class="blockquote-footer">Citation de  <cite title="Source Title">Classic Horaire Man</cite></footer>
+	    </blockquote>
+	  </div>
+	</div>
+	
+	<div class="card">
+	  <div class="card-header">
+	    Sessions d'éssai
+	  </div>
+	  <div class="card-body">
+	    <blockquote class="blockquote mb-0">
+	    	Du 21 Juin au 30 aout 2019, le club de melun ouvre ses portes tous les vendredi de 13h à 15h pour faire découvrir l'escrime et le talent des tireurs de notre club au grand public.
+	    	<br>
+	      <footer class="blockquote-footer">Citation de  <cite title="Source Title">Classic Event Man</cite></footer>
+	    </blockquote>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-sm-6 mb-3 mb-md-0">
+	    <div class="card">
+	      <div class="card-body">
+	        <h5 class="card-title">Rejoignez-nous sur les réseaux</h5>
+	        <p class="card-text">Soyez toujours au courant des dernières informations sur les réseaux sociaux !</p>
+	        <a href="#!" class="btn btn-primary">Aucun lien actuellement.</a>
+	      </div>
+	    </div>
+	  </div>
+
+	  <div class="col-sm-6">
+	    <div class="card">
+	      <div class="card-body">
+	        <h5 class="card-title">L'évènement de cet été de cette été vous à plus ?</h5>
+	        <p class="card-text">N'hésité pas à nous contacté par mail grâce au lien ci-dessous! le club sera ravi de traîter vos remarque.</p>
+	        <a href="#!" class="btn btn-primary">Aucun lien actuellement.</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 {% endblock %}

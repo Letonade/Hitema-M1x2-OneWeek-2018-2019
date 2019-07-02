@@ -1,12 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+	<h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
     {{ form_start(form) }}
-    <div>{{form_row(form.login)}}</div>
-    <div>{{form_row(form.rawpassword)}}</div>
-    <div>{{form_row(form.nom)}}</div>
-    <div>{{form_row(form.prenom)}}</div>
-    <button class="btn btn-primary">Enregistrer</button>
+    {{form_widget(form) }}
+	<button class="btn btn-primary" style="">Enregistrer</button>
     {{ form_end(form) }}
 {% endblock %}
 
