@@ -22,3 +22,7 @@ body{
 	top: calc(var(--nav-heigth) + 15px);
 	width: 100%;
 }
+
+.logoFade{
+	
+}
