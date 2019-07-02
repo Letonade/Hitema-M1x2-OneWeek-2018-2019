@@ -1,56 +1,4 @@
-/*body{
-	padding: 0px;
-	margin: 0px;
-}
-:root {
-  --nav-heigth: 50px;
-  --li-nav-top: calc(var(--nav-heigth)/4);
-}
-
-.container_nav{
-	z-index: 1000;
-	width: 100%;
-	position: absolute;
-	height: var(--nav-heigth);
-	box-shadow: 0px 5px 5px #9F9F9F;
-}
-.container_nav nav{
-	height: 100%;
-}
-
-.container_nav ul {
-	background-color: grey;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-}
-
-.container_nav ul li{
-	display: inline-block;
-	height: 100%;
-	padding-left: 12px;
-	padding-right: 12px;
-	background-color: black;
-}
-
-.container_nav ul li a{
-	font-size: 1.2em;
-	text-decoration: none; 
-	color: white; 
-
-}
-
-.container_body{
-	z-index: 800;
-	width: 100%;
-	background-color: firebrick;
-	position: absolute;
-	top: var(--nav-heigth);
-	padding-right: 6px;
-	padding-left: 6px;
-}*/
+/*Bootstrap project on https://bootstrap.build/app/project/StgPKlEhuaWV */
 
 body{
 	padding: 0px;
@@ -59,36 +7,6 @@ body{
 
 :root {
   --nav-heigth: 40px;
-  /*Bootstrap variable
-  --blue: #007bff;
-  --indigo: #6610f2;
-  --purple: #6f42c1;
-  --pink: #e83e8c;
-  --red: #dc3545;
-  --orange: #fd7e14;
-  --yellow: #ffc107;
-  --green: #28a745;
-  --teal: #20c997;
-  --cyan: #17a2b8;
-  --white: #fff;
-  --gray: #6c757d;
-  --gray-dark: #343a40;
-  --primary: #AA0000;
-  --secondary: #6c757d;
-  --success: #28a745;
-  --info: #17a2b8;
-  --warning: #ffc107;
-  --danger: #dc3545;
-  --light: #f8f9fa;
-  --dark: #343a40;
-  --breakpoint-xs: 0;
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-	*/
 }
 
 /* NAVBAR */
