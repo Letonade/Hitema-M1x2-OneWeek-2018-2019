@@ -26,10 +26,10 @@ class User implements UserInterface
     use IdTrait;
     /**
      * @var  string
-     * @ORM\Column(unique=true)
+     * @ORM\Column(unique=true,length=191)
      * @Assert\NotNull()
      * @Assert\Type("string")
-     * @Assert\Length(max=255)
+     * @Assert\Length(max=191)
      */
     private $login;
     /**
