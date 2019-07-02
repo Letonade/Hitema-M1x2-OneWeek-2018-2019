@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <h1>Entrainement index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom Utilisateur</th>
+                <th>Prenom Utilisateur</th>
+                <th>Role</th>
+                <th>Groupe</th>
+                <th>Categorie</th> 
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in User %}
+            <tr>
+                <td>{{ user.IdTrait }}</td>
+                <td>{{ user.nom ? user.nom : '' }}</td>
+                <td>{{ user.prenom ? user.prenom : '' }}</td>
+                <td>{{ user.role ? user.role : '' }}</td>
+                <td>{{ user.blason ? user.blason : '' }}</td>
+                <td>{{ user.groupe.id ? user.groupe.nom : '' }}</td>
+                <td>{{ user.profilCategorie ? user.profilCategorie: '' }}</td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Error 404 entrainements not found </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('entrainement_new') }}">Créer une entrainement</a>
+{% endblock %}
