@@ -1,0 +1,19 @@
+{% set currentRoute = app.request.attributes.get('_route') %}
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+    <a class="navbar-brand" href="#">CEACEMVS</a>
+    <ul class="navbar-nav">
+        {%if app.user %}
+            {% if app.user.email is defined %}<li class="nav-item">{{ app.user.email }}</li>{% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_security_logout') }}">Deco</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_security_connexion') }}">Connexion</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_security_inscription') }}">Inscription</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
