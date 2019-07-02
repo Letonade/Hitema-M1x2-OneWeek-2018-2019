@@ -63,12 +63,108 @@ class User implements UserInterface
      */
     private $role=1;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Objectif", mappedBy="profilSujet")
+     */
+    private $sujetObjectifs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Objectif", mappedBy="profilAuteur")
+     */
+    private $auteurObjectifs;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Entrainement", inversedBy="tireurProfils")
+     * @ORM\JoinTable(name="entrainement_tireur")
+     */
+    private $tireurEntrainements;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Entrainement", inversedBy="maProfils")
+     * @ORM\JoinTable(name="entrainement_ma")
+     */
+    private $maEntrainements;
+
+    /**
+     * @var ProfilCategorie
+     * @ORM\ManyToOne(targetEntity="ProfilCategorie", inversedBy="profils")
+     */
+    private $profilCategorie;
+
+    /**
+     * @var Arbitre
+     * @ORM\OneToOne(targetEntity="Arbitre", mappedBy="profil")
+     */
+    private $arbitre;
 
     public function __construct()
     {
+        $this->auteurObjectifs = new ArrayCollection();
+        $this->sujetObjectifs = new ArrayCollection();
+        $this->tireurEntrainements = new ArrayCollection();
+        $this->maEntrainements = new ArrayCollection();
 
     }
 
+    public function addSujetObjectif(Objectif $objectif) : User
+    {
+        if($this->sujetObjectifs->contains($objectif)){
+            return $this;
+        }
+        $this->sujetObjectifs->add($objectif);
+        $objectif->setProfilSujet($this);
+        return $this;
+    }
+
+    public function removeSujetObjectif(Objectif $objectif) : User
+    {
+        if (!$this->sujetObjectifs->contains($objectif))
+        {
+            return $this;
+        }
+        $this->sujetObjectifs->removeElement($objectif);
+        $objectif->setProfilSujet(null);
+        return $this;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSujetObjectifs()
+    {
+        return $this->sujetObjectifs;
+    }
+
+    public function addAuteurObjectif(Objectif $objectif) : User
+    {
+        if($this->auteurObjectifs->contains($objectif)){
+            return $this;
+        }
+        $this->auteurObjectifs->add($objectif);
+        $objectif->setProfilAuteur($this);
+        return $this;
+    }
+
+    public function removeAuteurObjectif(Objectif $objectif) : User
+    {
+        if (!$this->auteurObjectifs->contains($objectif))
+        {
+            return $this;
+        }
+        $this->auteurObjectifs->removeElement($objectif);
+        $objectif->setProfilAuteur(null);
+        return $this;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuteurObjectifs()
+    {
+        return $this->auteurObjectifs;
+    }
 
     /**
      * @return string
@@ -180,6 +276,85 @@ class User implements UserInterface
     {
         $this->prenom = $prenom;
     }
+
+    public function addTireurEntrainement(Entrainement $entrainement) : User
+    {
+        if($this->tireurEntrainements->contains($entrainement)){
+            return $this;
+        }
+        $this->tireurEntrainements->add($entrainement);
+        $entrainement->addTireurProfil($this);
+        return $this;
+    }
+
+    public function removeTireurEntrainement(Entrainement $entrainement) : User
+    {
+        if (!$this->tireurEntrainements->contains($entrainement))
+        {
+            return $this;
+        }
+        $this->tireurEntrainements->removeElement($entrainement);
+        $entrainement->removeTireurProfil($this);
+        return $this;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTireurEntrainements()
+    {
+        return $this->tireurEntrainements;
+    }
+
+    public function addMaEntrainement(Entrainement $entrainement) : User
+    {
+        if($this->maEntrainements->contains($entrainement)){
+            return $this;
+        }
+        $this->maEntrainements->add($entrainement);
+        $entrainement->addMaProfil($this);
+        return $this;
+    }
+
+    public function removeMaEntrainement(Entrainement $entrainement) : User
+    {
+        if (!$this->maEntrainements->contains($entrainement))
+        {
+            return $this;
+        }
+        $this->maEntrainements->removeElement($entrainement);
+        $entrainement->removeMaProfil($this);
+        return $this;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMaEntrainements()
+    {
+        return $this->maEntrainements;
+    }
+
+    /**
+     * @return ProfilCategorie
+     */
+    public function getProfilCategorie(): ProfilCategorie
+    {
+        return $this->profilCategorie;
+    }
+
+    /**
+     * @param ProfilCategorie $profilCategorie
+     */
+    public function setProfilCategorie(?ProfilCategorie $profilCategorie): void
+    {
+        $this->profilCategorie = $profilCategorie;
+    }
+
+
+
 
    
 
