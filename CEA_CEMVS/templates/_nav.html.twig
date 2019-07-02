@@ -1,6 +1,6 @@
 {% set currentRoute = app.request.attributes.get('_route') %}
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-    <a class="navbar-brand" href="#">CEACEMVS</a>
+    <a class="navbar-brand" href="/">CEACEMVS</a>
     <ul class="navbar-nav">
         {%if app.user %}
             {% if app.user.email is defined %}<li class="nav-item">{{ app.user.email }}</li>{% endif %}

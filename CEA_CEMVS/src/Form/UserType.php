@@ -30,16 +30,20 @@ class UserType extends AbstractType
     {
         $builder->add('login',TextType::class,[
            "label"=> "Login",
+           'attr' => array('class' => 'form-control'),
         ])
         ->add('rawpassword',TextType::class,[
             'label'=>'Votre mot de passe',
             'mapped'=>false,
+           'attr' => array('class' => 'form-control'),
         ])
         ->add('nom',TextType::class,[
             "label"=> "Nom",
+           'attr' => array('class' => 'form-control'),
         ])
         ->add('prenom',TextType::class,[
             "label"=> "Prenom",
+           'attr' => array('class' => 'form-control'),
         ])
         ;
 
