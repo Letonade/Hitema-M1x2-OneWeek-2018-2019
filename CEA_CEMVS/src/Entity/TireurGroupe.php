@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,6 +17,23 @@ class TireurGroupe
      */
     private $Nom;
 
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="tireurGroupe")
+     */
+    private $profils;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Entrainement", mappedBy="tireurGroupe")
+     */
+    private $entrainements;
+
+    public function __construct()
+    {
+        $this->entrainements = new ArrayCollection();
+        $this->profils = new ArrayCollection();
+    }
+
+
     public function getNom(): ?string
     {
         return $this->Nom;
@@ -26,5 +44,45 @@ class TireurGroupe
         $this->Nom = $Nom;
 
         return $this;
+    }
+
+    public function addProfil(User $user) : TireurGroupe
+    {
+        if($this->profils->contains($user)){
+            return $this;
+        }
+        $this->profils->add($user);
+        return $this;
+    }
+
+    public function removeProfil(User $user) : TireurGroupe
+    {
+        if (!$this->profils->contains($user))
+        {
+            return $this;
+        }
+        $this->profils->removeElement($user);
+        return $this;
+
+    }
+
+    public function addEntrainement(Entrainement $entrainement) : TireurGroupe
+    {
+        if($this->entrainements->contains($entrainement)){
+            return $this;
+        }
+        $this->entrainements->add($entrainement);
+        return $this;
+    }
+
+    public function removeEntrainement(Entrainement $entrainement) : TireurGroupe
+    {
+        if (!$this->entrainements->contains($entrainement))
+        {
+            return $this;
+        }
+        $this->entrainements->removeElement($entrainement);
+        return $this;
+
     }
 }
