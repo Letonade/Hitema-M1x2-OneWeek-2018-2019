@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Entity\Entrainement;
+use App\Entity\EntrainementType;
+use App\Entity\TireurGroupe;
 use App\Form\EntrainementFormType;
 use App\Form\DateCalendarEntrainementType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,13 +21,16 @@ class EntrainementController extends Controller
         $form 			= $this->createForm(EntrainementFormType::class, $Entrainements, array("saison" => $saison));
         $form->handleRequest($request);
         if ($form->isSubmitted()&&$form->isValid()) {
+            $em=$this->getDoctrine()->getManager();
+            $tireurGroupeRepository = $em->getRepository(TireurGroupe::class);
+            $entrainementTypeRepository = $em->getRepository(EntrainementType::class);
 
         	$form_entrainement = $request->request->get("entrainement_form");
             // Var fixe
             $libelle = $form_entrainement["Libelle"];
             $salle = $form_entrainement["Salle"];
-            $tireurGroupe = $form_entrainement["tireurGroupe"];
-            $entrainementType = $form_entrainement["entrainementType"];
+            $tireurGroupe = $tireurGroupeRepository->findOneBy(['id'=>$form_entrainement["tireurGroupe"]]);
+            $entrainementType = $entrainementTypeRepository->findOneBy(['id'=>$form_entrainement["entrainementType"]]);
         	foreach ($form_entrainement as $key => $value) {
         		$tmp = explode("_", $key);
         		if($tmp[0]=="Date"){
@@ -33,19 +38,22 @@ class EntrainementController extends Controller
 					$month = $tmp[2];
 					$year = $tmp[3];
 					//variable pour bdd
-					$date_time_deb = new \DateTime($day."/".$month."/".$year." ".$form_entrainement["HeureDebut"].":00", new \DateTimeZone("Europe/Paris"));
-					$date_time_fin = new \DateTime($day."/".$month."/".$year." ".$form_entrainement["HeureFin"].":00", new \DateTimeZone("Europe/Paris"));
+					$date_time_deb = new \DateTime($day."-".$month."-".$year." ".$form_entrainement["HeureDebut"].":00", new \DateTimeZone("Europe/Paris"));
+					$date_time_fin = new \DateTime($day."-".$month."-".$year." ".$form_entrainement["HeureFin"].":00", new \DateTimeZone("Europe/Paris"));
                     
                     $new_entrainement = new Entrainement();
                     $new_entrainement->setLibelle($libelle);
                     $new_entrainement->setSalle($salle);
                     $new_entrainement->setTireurGroupe($tireurGroupe);
                     $new_entrainement->setEntrainementType($entrainementType);
+                    $new_entrainement->setDateDebut($date_time_deb);
+                    $new_entrainement->setDateFin($date_time_fin);
+                    $em->persist($new_entrainement);
+                    //print_r($day."/".$month."/".$year." ".$form_entrainement["HeureDebut"].":00");
 
-                    print_r($new_entrainement);
         		}
         	}
-
+            $em->flush();
         	/*
             $em = $this->getDoctrine()->getManager();
             $em->persist($Entrainements);
