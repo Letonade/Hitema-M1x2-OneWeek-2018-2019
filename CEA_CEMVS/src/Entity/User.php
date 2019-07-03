@@ -92,8 +92,7 @@ class User implements UserInterface
     private $profilCategorie;
 
     /**
-     * @var Arbitre
-     * @ORM\OneToOne(targetEntity="Arbitre", inversedBy="profil")
+     * @ORM\ManyToMany(targetEntity="Arbitre", inversedBy="profils")
      */
     private $arbitres;
 
@@ -438,10 +437,8 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Arbitre
-     */
-    public function getArbitres(): Arbitre
+
+    public function getArbitres()
     {
         return $this->arbitres;
     }

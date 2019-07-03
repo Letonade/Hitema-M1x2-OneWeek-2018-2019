@@ -6,13 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ImportCSVController extends Controller
 {
     /**
      * @Route("/Import")
      */
-    public function ImportCSVAction(){
+    public function ImportCSVAction(UserPasswordEncoderInterface $encoder){
 
         $user_table = array(); // Stockage
         $line = 0;
@@ -51,14 +52,14 @@ class ImportCSVController extends Controller
             // Encode le mdp TEST trouvé sur le net
             // $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
             // $plainpassword = $user_unit["password"];
-            // $password = $encoder->encodePassword($plainpassword, $user->getSalt());
+             $password = $encoder->encodePassword($user, $user_unit["password"]);
 
             // Hydrate user
             //$user->setPassword($password);
             $user->setNom($user_unit["nom"]);
             $user->setPrenom($user_unit["prenom"]);
             $user->setLogin($user_unit["login"]);
-            $user->setPassword($user_unit["password"]);
+            $user->setPassword($password);
                 
             // Enregistrement du user en local
             $em->persist($user);
