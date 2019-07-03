@@ -9,15 +9,17 @@
         </div>
     {% endif %}
     <div class="container mt-5" style="border:1px solid #eee;">
-        <form action="{{ path('connexion')}}" method="post">
+        <form action="{{ path('app_security_connexion')}}" method="post">
             <div class="form-group text-center rounded" >
                 <h3  class="text-center mb-4 bg-primary" style="color:#fff;padding:20px;"> Connexion à votre compte </h3>
-                <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" name="_username" placeholder="Username" class="form-control mb-3 text-center" value ="{{ last_username }}">
+                <label for="login">Nom d'utilisateur</label>
+                <input type="text" id="login" name="login" placeholder="Username" class="form-control mb-3 text-center" value ="{{ last_username }}">
                 <label for="password">  Mot de passe   </label>
-                <input type="password" id="password" name="_password" placeholder="••••••••••••••" class="form-control mb-3 text-center"  >
+                <input type="password" id="password" name="password" placeholder="••••••••••••••" class="form-control mb-3 text-center"  >
                 <hr>
-                    
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
                 <button class="btn btn-primary btn-lg mb-2" >Se Connecter </button>
             
             </div>

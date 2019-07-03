@@ -31,7 +31,7 @@
     {% if app.user %}
         <a href="{{path('logout')}}" type="button" class="btn btn-danger">Déconnexion <i class="fas fa-power-off" ></i></a>
     {% else %}#}
-        <a href="{{path('connexion')}}" type="button" class="btn btn-success">Connexion <i class="fas fa-sign-in-alt"></i></a>
+        <a href="{{path('app_security_connexion')}}" type="button" class="btn btn-success">Connexion <i class="fas fa-sign-in-alt"></i></a>
           <a href="{{path('inscription')}}" type="button" class="btn btn-success">Inscription <i class="fas fa-sign-in-alt"></i></a>
     {#{% endif %}#}
   </div>

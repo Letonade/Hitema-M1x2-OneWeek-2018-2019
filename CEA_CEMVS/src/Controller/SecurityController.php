@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/connexion", name="connexion")
+     * @Route("/connexion")
      */
     public function connexion(AuthenticationUtils $authentificationUtils)
     {
@@ -29,13 +29,14 @@ class SecurityController extends AbstractController
      */
     public function inscription(Request $request)
     {
-        
-        $form = $this->createForm(UserType::class);
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted()&&$form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
             $em->flush();
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('news');
         }
         return $this->render('security/inscription.html.twig', [
             'form' => $form->createView(),

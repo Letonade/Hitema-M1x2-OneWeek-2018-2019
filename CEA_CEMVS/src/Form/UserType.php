@@ -50,9 +50,9 @@ class UserType extends AbstractType
         
         ->add('role', ChoiceType::class, [
             'choices' => [
-                'Admin' => 'admin',
-                'Tireur' => 'tireur',
-                'Maitre'   => 'maitre',
+                'Admin' => 3,
+                'Tireur' => 2,
+                'Maitre'   => 1,
                 
             ],
             'attr' => array('class' => 'form-control mb-3 text-center'),

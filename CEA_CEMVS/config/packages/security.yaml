@@ -45,7 +45,7 @@ security:
                 username_parameter: login
                 password_parameter: password
                 always_use_default_target_path: true
-                default_target_path: index
+                default_target_path: news
 
 
             logout:

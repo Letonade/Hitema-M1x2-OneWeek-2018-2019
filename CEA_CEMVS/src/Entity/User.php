@@ -227,7 +227,7 @@ class User implements UserInterface
     /**
      * @param string $password
      */
-    public function setPassword(string $password): void
+    public function setPassword(?string $password): void
     {
         $this->password = $password;
     }
