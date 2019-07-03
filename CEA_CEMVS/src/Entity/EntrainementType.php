@@ -27,6 +27,9 @@ class EntrainementType
         $this->entrainements = new ArrayCollection();
     }
 
+    public function __toString(){
+        return $this->Nom;
+    }
 
     public function getNom(): ?string
     {

@@ -225,7 +225,7 @@ class Entrainement
     /**
      * @return TireurGroupe
      */
-    public function getTireurGroupe(): TireurGroupe
+    public function getTireurGroupe(): ?TireurGroupe
     {
         return $this->tireurGroupe;
     }
@@ -233,7 +233,7 @@ class Entrainement
     /**
      * @param TireurGroupe $tireurGroupe
      */
-    public function setTireurGroupe(TireurGroupe $tireurGroupe): void
+    public function setTireurGroupe(?TireurGroupe $tireurGroupe): void
     {
         $this->tireurGroup = $tireurGroupe;
     }

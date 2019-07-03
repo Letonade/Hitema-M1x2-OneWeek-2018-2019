@@ -33,6 +33,9 @@ class TireurGroupe
         $this->profils = new ArrayCollection();
     }
 
+    public function __toString(){
+        return $this->Nom;
+    }
 
     public function getNom(): ?string
     {
