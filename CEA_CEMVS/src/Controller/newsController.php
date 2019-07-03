@@ -7,14 +7,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
-class bodyController extends AbstractController
+class newsController extends AbstractController
 {
     /**
-     * @Route("/", name="body")
+     * @Route("/", name="news")
      */
     public function index(Request $request)
     {
         
-        return $this->render('body/index.html.twig');
+        return $this->render('news/index.html.twig');
     }
 }

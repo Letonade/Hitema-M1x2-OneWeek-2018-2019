@@ -93,9 +93,37 @@ class User implements UserInterface
 
     /**
      * @var Arbitre
-     * @ORM\OneToOne(targetEntity="Arbitre", mappedBy="profil")
+     * @ORM\OneToOne(targetEntity="Arbitre", inversedBy="profil")
      */
     private $arbitre;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Competition", mappedBy="arbitres")
+     *
+     */
+    private $arbitreCompetitions;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Competition", mappedBy="encadrants")
+     *
+     */
+    private $encadrantCompetitions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Lecon", mappedBy="ma")
+     */
+    private $maLecons;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Lecon", mappedBy="tireur")
+     */
+    private $tireurLecons;
+
+    /**
+     * @var TireurGroupe
+     * @ORM\ManyToOne(targetEntity="TireurGroupe", inversedBy="profils")
+     */
+    private $tireurGroupe;
 
     public function __construct()
     {
@@ -103,6 +131,10 @@ class User implements UserInterface
         $this->sujetObjectifs = new ArrayCollection();
         $this->tireurEntrainements = new ArrayCollection();
         $this->maEntrainements = new ArrayCollection();
+        $this->arbitreCompetitions = new ArrayCollection();
+        $this->encadrantCompetitions = new ArrayCollection();
+        $this->maLecons = new ArrayCollection();
+        $this->tireurLecons = new ArrayCollection();
 
     }
 
@@ -354,8 +386,172 @@ class User implements UserInterface
     }
 
 
+    public function addArbitreCompetition(Competition $competition) : User
+    {
+        if($this->arbitreCompetitions->contains($competition)){
+            return $this;
+        }
+        $this->arbitreCompetitions->add($competition);
+        $competition->addArbitre($this);
+        return $this;
+    }
+
+    public function removeArbitreCompetition(Competition $competition) : User
+    {
+        if (!$this->arbitreCompetitions->contains($competition))
+        {
+            return $this;
+        }
+        $this->arbitreCompetitions->removeElement($competition);
+        $competition->removeArbitre($this);
+        return $this;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getArbitreCompetitions()
+    {
+        return $this->arbitreCompetitions;
+    }
+
+    /**
+     * @return Arbitre
+     */
+    public function getArbitre(): Arbitre
+    {
+        return $this->arbitre;
+    }
+
+    /**
+     * @param Arbitre $arbitre
+     */
+    public function setArbitre(Arbitre $arbitre): void
+    {
+        $this->arbitre = $arbitre;
+    }
+
+    public function addEncadrantCompetition(Competition $competition) : User
+    {
+        if($this->encadrantCompetitions->contains($competition)){
+            return $this;
+        }
+        $this->encadrantCompetitions->add($competition);
+        $competition->addEncadrant($this);
+        return $this;
+    }
+
+    public function removeEncadrantCompetition(Competition $competition) : User
+    {
+        if (!$this->encadrantCompetitions->contains($competition))
+        {
+            return $this;
+        }
+        $this->encadrantCompetitions->removeElement($competition);
+        $competition->removeEncadrant($this);
+        return $this;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEncadrantCompetitions()
+    {
+        return $this->encadrantCompetitions;
+    }
 
 
-   
+
+
+    public function addTireurLecon(Lecon $lecon) : User
+    {
+        if($this->tireurLecons->contains($lecon)){
+            return $this;
+        }
+        $this->tireurLecons->add($lecon);
+        $lecon->setTireur($this);
+        return $this;
+    }
+
+    public function removeTireurLecon(Lecon $lecon) : User
+    {
+        if (!$this->tireurLecons->contains($lecon))
+        {
+            return $this;
+        }
+        $this->tireurLecons->removeElement($lecon);
+        $lecon->setTireur(null);
+        return $this;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTireurLecons()
+    {
+        return $this->tireurLecons;
+    }
+
+
+
+    public function addMaLecon(Lecon $lecon) : User
+    {
+        if($this->maLecons->contains($lecon)){
+            return $this;
+        }
+        $this->maLecons->add($lecon);
+        $lecon->setMa($this);
+        return $this;
+    }
+
+    public function removeMaLecon(Lecon $lecon) : User
+    {
+        if (!$this->maLecons->contains($lecon))
+        {
+            return $this;
+        }
+        $this->maLecons->removeElement($lecon);
+        $lecon->setMa(null);
+        return $this;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMaLecons()
+    {
+        return $this->maLecons;
+    }
+
+    /**
+     * @param mixed $maLecons
+     */
+    public function setMaLecons($maLecons): void
+    {
+        $this->maLecons = $maLecons;
+    }
+
+    /**
+     * @return TireurGroupe
+     */
+    public function getTireurGroupe(): TireurGroupe
+    {
+        return $this->tireurGroupe;
+    }
+
+    /**
+     * @param TireurGroupe $tireurGroupe
+     */
+    public function setTireurGroupe(TireurGroupe $tireurGroupe): void
+    {
+        $this->tireurGroupe = $tireurGroupe;
+    }
+
+
+
 
 }

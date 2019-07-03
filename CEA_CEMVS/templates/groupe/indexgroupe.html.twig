@@ -16,10 +16,10 @@
         <tbody>
         {% for groupe in TireurGroupe %}
             <tr>
-                <td>{{ TireurGroupe.id }}</td>
-                <td>{{ TireurGroupe.nom }}</td>
+                <td>{{ groupe.id }}</td>
+                <td>{{ groupe.nom }}</td>
                 <td>
-                    <a href="{{ path('groupeShow', {'id': TireurGroupe.id}) }}">show</a>
+                    <a href="{{ path('groupeShow', {'id': groupe.id}) }}">show</a>
                 
                 </td>
             </tr>

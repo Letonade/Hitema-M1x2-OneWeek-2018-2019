@@ -8,14 +8,12 @@
             {{ error.messageKey |trans(error.messagedata, 'security' ) }}
         </div>
     {% endif %}
-
-    <a href="{{ path('body') }}"><button class="btn btn-primary"> Retour</button></a>
     <div class="container mt-5" style="border:1px solid #eee;">
         <form action="{{ path('connexion')}}" method="post">
             <div class="form-group text-center rounded" >
                 <h3  class="text-center mb-4 bg-primary" style="color:#fff;padding:20px;"> Connexion à votre compte </h3>
                 <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" name="_username" placeholder="MonSuperUsername" class="form-control mb-3 text-center" value ="{{ last_username }}">
+                <input type="text" id="username" name="_username" placeholder="Username" class="form-control mb-3 text-center" value ="{{ last_username }}">
                 <label for="password">  Mot de passe   </label>
                 <input type="password" id="password" name="_password" placeholder="••••••••••••••" class="form-control mb-3 text-center"  >
                 <hr>

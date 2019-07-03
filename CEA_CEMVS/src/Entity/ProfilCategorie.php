@@ -22,11 +22,15 @@ class ProfilCategorie
      */
     private $profils;
 
-
+    /**
+     * @ORM\ManyToMany(targetEntity="Competition", mappedBy="profilsCategories")
+     */
+    private $competitions;
 
     public function __construct()
     {
         $this->profils = new ArrayCollection();
+        $this->competitions = new ArrayCollection();
     }
 
 
@@ -63,4 +67,43 @@ class ProfilCategorie
         return $this;
 
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProfils()
+    {
+        return $this->profils;
+    }
+
+    public function addCompetition(Competition $competition) : ProfilCategorie
+    {
+        if($this->competitions->contains($competition)){
+            return $this;
+        }
+        $this->competitions->add($competition);
+        $competition->addProfilCategorie($this);
+        return $this;
+    }
+
+    public function removeCompetition(Competition $competition) : ProfilCategorie
+    {
+        if (!$this->competitions->contains($competition))
+        {
+            return $this;
+        }
+        $this->competitions->removeElement($competition);
+        $competition->removeProfilCategorie($this);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompetitions()
+    {
+        return $this->competitions;
+    }
+
+
 }

@@ -21,6 +21,27 @@ class Lecon
      */
     private $TexteMaitre;
 
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="maLecons")
+     */
+
+    private $ma;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="tireurLecons")
+     */
+
+    private $tireur;
+
+    /**
+     * @var Entrainement
+     * @ORM\ManyToOne(targetEntity="Entrainement", inversedBy="lecons")
+     */
+
+    private $entrainement;
+
     public function getTexteTireur(): ?string
     {
         return $this->TexteTireur;
@@ -44,4 +65,54 @@ class Lecon
 
         return $this;
     }
+
+    /**
+     * @return User
+     */
+    public function getMa(): ?User
+    {
+        return $this->ma;
+    }
+
+    /**
+     * @param User $ma
+     */
+    public function setMa(?User $ma): void
+    {
+        $this->ma = $ma;
+    }
+
+    /**
+     * @return User
+     */
+    public function getTireur(): ?User
+    {
+        return $this->tireur;
+    }
+
+    /**
+     * @param User $tireur
+     */
+    public function setTireur(?User $tireur): void
+    {
+        $this->tireur = $tireur;
+    }
+
+    /**
+     * @return Entrainement
+     */
+    public function getEntrainement(): ?Entrainement
+    {
+        return $this->entrainement;
+    }
+
+    /**
+     * @param Entrainement $entrainement
+     */
+    public function setEntrainement(?Entrainement $entrainement): void
+    {
+        $this->entrainement = $entrainement;
+    }
+
+
 }

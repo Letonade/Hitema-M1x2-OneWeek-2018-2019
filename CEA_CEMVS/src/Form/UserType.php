@@ -7,8 +7,8 @@
  */
 
 namespace App\Form;
-
-
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,23 +30,34 @@ class UserType extends AbstractType
     {
         $builder->add('login',TextType::class,[
            "label"=> "Login",
-           'attr' => array('class' => 'form-control'),
+           'attr' => array('class' => 'form-control mb-3 text-center'),
         ])
-        ->add('rawpassword',TextType::class,[
+        ->add('rawpassword',PasswordType::class,[
             'label'=>'Votre mot de passe',
             'mapped'=>false,
-           'attr' => array('class' => 'form-control'),
+           'attr' => array('class' => 'form-control mb-3 text-center','placeholder'=> '••••••••••••••'),
+  
         ])
         ->add('nom',TextType::class,[
             "label"=> "Nom",
-           'attr' => array('class' => 'form-control'),
+           'attr' => array('class' => 'form-control mb-3 text-center'),
         ])
         ->add('prenom',TextType::class,[
             "label"=> "Prenom",
-           'attr' => array('class' => 'form-control'),
+           'attr' => array('class' => 'form-control mb-3 text-center'),
         ])
-        ;
-
+    
+        
+        ->add('role', ChoiceType::class, [
+            'choices' => [
+                'Admin' => 'admin',
+                'Tireur' => 'tireur',
+                'Maitre'   => 'maitre',
+                
+            ],
+            'attr' => array('class' => 'form-control mb-3 text-center'),
+           
+        ]);
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT,  function (FormEvent $event){
            /* dump($event->getForm());

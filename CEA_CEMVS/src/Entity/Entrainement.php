@@ -49,10 +49,25 @@ class Entrainement
 
     private $entrainementType;
 
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Lecon", mappedBy="entrainement")
+     */
+    private $lecons;
+
+    /**
+     * @var TireurGroupe
+     * @ORM\ManyToOne(targetEntity="TireurGroupe", inversedBy="entrainements")
+     */
+
+    private $tireurGroupe;
+
     public function __construct()
     {
         $this->tireurProfils = new ArrayCollection();
         $this->maProfils = new ArrayCollection();
+        $this->lecons = new ArrayCollection();
     }
 
 
@@ -180,6 +195,49 @@ class Entrainement
         $this->entrainementType = $entrainementType;
     }
 
+    public function addLecon(Lecon $lecon) : Entrainement
+    {
+        if($this->lecons->contains($lecon)){
+            return $this;
+        }
+        $this->lecons->add($lecon);
+        return $this;
+    }
+
+    public function removeLecon(Lecon $lecon) : Entrainement
+    {
+        if (!$this->lecons->contains($lecon))
+        {
+            return $this;
+        }
+        $this->lecons->removeElement($lecon);
+        return $this;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLecons()
+    {
+        return $this->lecons;
+    }
+
+    /**
+     * @return TireurGroupe
+     */
+    public function getTireurGroupe(): TireurGroupe
+    {
+        return $this->tireurGroup;
+    }
+
+    /**
+     * @param TireurGroupe $tireurGroupe
+     */
+    public function setTireurGroupe(TireurGroupe $tireurGroupe): void
+    {
+        $this->tireurGroup = $tireurGroupe;
+    }
 
 
 }

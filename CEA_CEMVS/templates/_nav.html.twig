@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="{{ path('body') }}">CEA-CEMVS</a>
+  <a class="navbar-brand" href="{{ path('news') }}">CEA-CEMVS</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{{path ('news')}}">Acceuil </a>
       </li>
      {#<li class="nav-item">
         <a class="nav-link" href="{{ path('entrainement_index')}}">Entrainements</a>
@@ -32,6 +32,7 @@
         <a href="{{path('logout')}}" type="button" class="btn btn-danger">Déconnexion <i class="fas fa-power-off" ></i></a>
     {% else %}#}
         <a href="{{path('connexion')}}" type="button" class="btn btn-success">Connexion <i class="fas fa-sign-in-alt"></i></a>
+          <a href="{{path('inscription')}}" type="button" class="btn btn-success">Inscription <i class="fas fa-sign-in-alt"></i></a>
     {#{% endif %}#}
   </div>
 </nav>
