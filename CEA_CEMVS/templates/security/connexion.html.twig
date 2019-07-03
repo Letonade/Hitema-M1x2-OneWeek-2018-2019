@@ -1,28 +1,30 @@
 {% extends 'base.html.twig' %}
-{% block title %} Connexion {% endblock %}
+
+{% block title %} Connexion à votre compte {% endblock %}
+
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey |trans(error.messagedata, 'security' ) }}
+        </div>
+    {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-        <table class="table table-borderless">
-        <tr>
-            <td>
-                <input type="text" value="{{ last_username }}" name="login" id="inputLogin" class="form-control" placeholder="Login" required autofocus>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            </td>
-        </tr>
-        </table>
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
-        <button class="btn btn-primary" type="submit">Se connecter</button>
-    </form>
-
+    <a href="{{ path('body') }}"><button class="btn btn-primary"> Retour</button></a>
+    <div class="container mt-5" style="border:1px solid #eee;">
+        <form action="{{ path('connexion')}}" method="post">
+            <div class="form-group text-center rounded" >
+                <h3  class="text-center mb-4 bg-primary" style="color:#fff;padding:20px;"> Connexion à votre compte </h3>
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="_username" placeholder="MonSuperUsername" class="form-control mb-3 text-center" value ="{{ last_username }}">
+                <label for="password">  Mot de passe   </label>
+                <input type="password" id="password" name="_password" placeholder="••••••••••••••" class="form-control mb-3 text-center"  >
+                <hr>
+                    
+                <button class="btn btn-primary btn-lg mb-2" >Se Connecter </button>
+            
+            </div>
+        </form>
+    
+    </div>
 {% endblock %}
+

@@ -42,7 +42,7 @@ security:
             form_login:
                 login_path: app_security_connexion
                 check_path: app_security_connexion
-                username_parameter: email
+                username_parameter: login
                 password_parameter: password
                 always_use_default_target_path: true
                 default_target_path: index

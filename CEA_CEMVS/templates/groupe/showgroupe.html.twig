@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groupe{% endblock %}
+
+{% block body %}
+    <h1>Groupe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{TireurGroupe.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ TireurGroupe.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('groupe_groupeIndex') }}">return to list OF groupe</a>
+
+{% endblock %}

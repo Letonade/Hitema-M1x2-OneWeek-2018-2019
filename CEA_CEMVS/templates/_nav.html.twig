@@ -1,19 +1,37 @@
-{% set currentRoute = app.request.attributes.get('_route') %}
-<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-    <a class="navbar-brand" href="/">CEACEMVS</a>
-    <ul class="navbar-nav">
-        {%if app.user %}
-            {% if app.user.email is defined %}<li class="nav-item">{{ app.user.email }}</li>{% endif %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_security_logout') }}">Deco</a>
-            </li>
-        {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_security_connexion') }}">Connexion</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_security_inscription') }}">Inscription</a>
-            </li>
-        {% endif %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="{{ path('body') }}">CEA-CEMVS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+     {#<li class="nav-item">
+        <a class="nav-link" href="{{ path('entrainement_index')}}">Entrainements</a>
+      </li>#}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ path('groupeIndex')}}">Groupes</a>
+      </li>
+       {#
+      <li class="nav-item">
+        <a class="nav-link" href="#">Leçons</a>
+      </li>
+     {% if is_granted('ROLE_ADMIN') %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ path('user_arme_index')}}">Armes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('users_index')}}">Utilisateurs</a>
+      </li>
+     {% endif %}
     </ul>
+    {% if app.user %}
+        <a href="{{path('logout')}}" type="button" class="btn btn-danger">Déconnexion <i class="fas fa-power-off" ></i></a>
+    {% else %}#}
+        <a href="{{path('connexion')}}" type="button" class="btn btn-success">Connexion <i class="fas fa-sign-in-alt"></i></a>
+    {#{% endif %}#}
+  </div>
 </nav>

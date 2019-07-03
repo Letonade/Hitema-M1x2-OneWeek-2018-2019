@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groupe index{% endblock %}
+
+{% block body %}
+    <h1>Groupe index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for groupe in TireurGroupe %}
+            <tr>
+                <td>{{ TireurGroupe.id }}</td>
+                <td>{{ TireurGroupe.nom }}</td>
+                <td>
+                    <a href="{{ path('groupeShow', {'id': TireurGroupe.id}) }}">show</a>
+                
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">groupe not found 404</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('groupe_new') }}">Create new</a>
+{% endblock %}
