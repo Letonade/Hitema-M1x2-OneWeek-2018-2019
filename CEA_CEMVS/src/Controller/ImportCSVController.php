@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class ImportCSVController extends Controller
 {
     /**
-     * @Route("/Import")
+     * @Route("/Import", name="Import")
      */
     public function ImportCSVAction(UserPasswordEncoderInterface $encoder){
 
@@ -70,7 +70,7 @@ class ImportCSVController extends Controller
         $em->flush();
 
         // Renvoi de la réponse
-        return new Response('Done !');
+          return $this->render('news/index.html.twig');
 
         /*return $this->render('security/connexion.html.twig',[
             'error'=> $utils->getLastAuthenticationError(),

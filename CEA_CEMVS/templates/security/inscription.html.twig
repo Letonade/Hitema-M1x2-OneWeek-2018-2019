@@ -1,7 +1,47 @@
 {% extends 'base.html.twig' %}
+{#
+{% block title %} Inscription {% endblock %}
 
 {% block body %}
-	<h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
+
+
+    <a href="{{ path('Import') }}"><button class="btn btn-primary"> Import ton fichier CSV</button></a>
+    <input type="file"/>
+    <div class="container mt-5" style="border:1px solid #eee;">
+        <form action="{{ path('inscription')}}" method="post">
+            <div class="form-group text-center rounded" >
+                <h3  class="text-center mb-4 bg-primary" style="color:#fff;padding:20px;"> Ajouter un nouveau Utilisateur</h3>
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="_username" placeholder="Username" class="form-control mb-3 text-center">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="_nom" placeholder="Nom" class="form-control mb-3 text-center">
+                 <label for="prenom">Prenom</label>
+                <input type="text" id="prenom" name="_prenom" placeholder="Prenom" class="form-control mb-3 text-center">
+                <label for="Role">Role</label>
+                <select name="Role" class="form-control mb-3 text-center">
+                                <option value="Admin"></option>
+                                <option value="Tireur"></option>
+                                <option value="Arbitre"></option>
+    ....
+                 </select>
+                <label for="password">  Mot de passe   </label>
+                <input type="password" id="password" name="_password" placeholder="••••••••••••••" class="form-control mb-3 text-center"  >
+                <hr>
+                    
+                <button class="btn btn-primary btn-lg mb-2" >Enregistrer </button>
+            
+            </div>
+        </form>
+    
+    </div>
+{% endblock %}
+#}
+{% block body %}
+<a href="{{ path('Import') }}"><button class="btn btn-primary"> Import ton fichier CSV</button></a>
+<div class="container mt-5" style="border:1px solid #eee;">
+  <div class="form-group text-center rounded" >
+	<h3  class="text-center mb-4 bg-primary" style="color:#fff;padding:20px;"> Ajouter un nouveau Utilisateur</h3>
+    
     {{ form_start(form) }}
     {{form_widget(form) }}
 	<button class="btn btn-primary" style="">Enregistrer</button>
@@ -11,4 +51,3 @@
 {% block title %}
 
 {% endblock %}
-
