@@ -74,8 +74,8 @@ class User implements UserInterface
     private $auteurObjectifs;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Entrainement", inversedBy="tireurProfils")
-     * @ORM\JoinTable(name="entrainement_tireur")
+     * @ORM\OneToMany(targetEntity="EntrainementTireur", mappedBy="tireur")
+     *
      */
     private $tireurEntrainements;
 
@@ -95,7 +95,7 @@ class User implements UserInterface
      * @var Arbitre
      * @ORM\OneToOne(targetEntity="Arbitre", inversedBy="profil")
      */
-    private $arbitre;
+    private $arbitres;
 
     /**
      * @ORM\ManyToMany(targetEntity="Competition", mappedBy="arbitres")
@@ -135,6 +135,7 @@ class User implements UserInterface
         $this->encadrantCompetitions = new ArrayCollection();
         $this->maLecons = new ArrayCollection();
         $this->tireurLecons = new ArrayCollection();
+        $this->arbitres = new ArrayCollection();
 
     }
 
@@ -309,24 +310,22 @@ class User implements UserInterface
         $this->prenom = $prenom;
     }
 
-    public function addTireurEntrainement(Entrainement $entrainement) : User
+    public function addTireurEntrainement(EntrainementTireur $entrainementTireur) : User
     {
-        if($this->tireurEntrainements->contains($entrainement)){
+        if($this->tireurEntrainements->contains($entrainementTireur)){
             return $this;
         }
-        $this->tireurEntrainements->add($entrainement);
-        $entrainement->addTireurProfil($this);
+        $this->tireurEntrainements->add($entrainementTireur);
         return $this;
     }
 
-    public function removeTireurEntrainement(Entrainement $entrainement) : User
+    public function removeTireurEntrainement(EntrainementTireur $entrainementTireur) : User
     {
-        if (!$this->tireurEntrainements->contains($entrainement))
+        if (!$this->tireurEntrainements->contains($entrainementTireur))
         {
             return $this;
         }
-        $this->tireurEntrainements->removeElement($entrainement);
-        $entrainement->removeTireurProfil($this);
+        $this->tireurEntrainements->removeElement($entrainementTireur);
         return $this;
 
     }
@@ -416,21 +415,38 @@ class User implements UserInterface
         return $this->arbitreCompetitions;
     }
 
-    /**
-     * @return Arbitre
-     */
-    public function getArbitre(): Arbitre
+    public function addArbitre(Arbitre $arbitre) : User
     {
-        return $this->arbitre;
+        if ($this->arbitres->contains($arbitre))
+        {
+            return $this;
+        }
+        $this->arbitres->add($arbitre);
+        $arbitre->addProfile($this);
+        return $this;
+
+    }
+
+    public function removeArbitre(Arbitre $arbitre) : User
+    {
+        if (!$this->arbitres->contains($arbitre))
+        {
+            return $this;
+        }
+        $this->arbitres->removeElement($arbitre);
+        $arbitre->removeProfile($this);
+        return $this;
     }
 
     /**
-     * @param Arbitre $arbitre
+     * @return Arbitre
      */
-    public function setArbitre(Arbitre $arbitre): void
+    public function getArbitres(): Arbitre
     {
-        $this->arbitre = $arbitre;
+        return $this->arbitres;
     }
+
+
 
     public function addEncadrantCompetition(Competition $competition) : User
     {

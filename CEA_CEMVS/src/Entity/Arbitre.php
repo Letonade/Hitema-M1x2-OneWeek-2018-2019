@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,9 +21,15 @@ class Arbitre
 
     /**
      * @var User
-     * @ORM\OneToOne(targetEntity="User", mappedBy="arbitre")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="arbitres")
      */
-    private $profil;
+    private $profils;
+
+    public function __construct()
+    {
+        $this->profils = new ArrayCollection();
+    }
+
 
     /**
      * @return ArbitreNiveau
@@ -40,7 +47,28 @@ class Arbitre
         $this->niveau = $niveau;
     }
 
+    public function addProfil(User $user): Arbitre
+    {
+        if ($this->profils->contains($user))
+        {
+            return $this;
+        }
+        $this->profils->add($user);
+        $user->addArbitre($this);
+        return $this;
+    }
 
+    public function removeProfil(User $user):Arbitre
+    {
+        if (!$this->profils->contains($user))
+        {
+            return $this;
+
+        }
+        $this->profils->removeElement($user);
+        $user->removeArbitre($this);
+        return $this;
+    }
 
 
 }

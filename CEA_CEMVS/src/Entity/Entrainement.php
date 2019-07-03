@@ -33,7 +33,7 @@ class Entrainement
     private $Salle;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="tireurEntrainements")
+     * @ORM\OneToMany(targetEntity="EntrainementTireur", mappedBy="entrainement")
      */
     private $tireurProfils;
 
@@ -119,24 +119,23 @@ class Entrainement
         return $this;
     }
 
-    public function addTireurProfil(User $user) : Entrainement
+    public function addTireurProfil(EntrainementTireur $entrainementTireur) : Entrainement
     {
-        if($this->tireurProfils->contains($user)){
+        if($this->tireurProfils->contains($entrainementTireur)){
             return $this;
         }
-        $this->tireurProfils->add($user);
-        $user->addTireurEntrainement($this);
+        $this->tireurProfils->add($entrainementTireur);
+
         return $this;
     }
 
-    public function removeTireurProfil(User $user) : Entrainement
+    public function removeTireurProfil(EntrainementTireur $entrainementTireur) : Entrainement
     {
-        if (!$this->tireurProfils->contains($user))
+        if (!$this->tireurProfils->contains($entrainementTireur))
         {
             return $this;
         }
-        $this->tireurProfils->removeElement($user);
-        $user->removeTireurEntrainement($this);
+        $this->tireurProfils->removeElement($entrainementTireur);
         return $this;
 
     }
@@ -228,7 +227,7 @@ class Entrainement
      */
     public function getTireurGroupe(): TireurGroupe
     {
-        return $this->tireurGroup;
+        return $this->tireurGroupe;
     }
 
     /**
