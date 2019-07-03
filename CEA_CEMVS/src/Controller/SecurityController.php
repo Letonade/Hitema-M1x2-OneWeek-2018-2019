@@ -1,14 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arino
- * Date: 28/11/2018
- * Time: 11:15
- */
-
 namespace App\Controller;
-
-
 
 use App\Entity\User;
 use App\Form\UserType;
