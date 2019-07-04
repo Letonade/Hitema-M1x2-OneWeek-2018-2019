@@ -34,6 +34,10 @@ class CompetitionType extends AbstractType
             'mapped'=>false,
            'attr' => array('class' => 'form-control timepicker'),
         ])
+        ->add('nom', TextType::class,[
+            'label'=>'Nom de la competition',
+            'attr' => array('class' => 'form-control timepicker'),
+        ])
         ;
         foreach ($this->calendar as $key => $value) {
         	$builder->add('Date_'.$value["allUnder"],CheckboxType::class,[

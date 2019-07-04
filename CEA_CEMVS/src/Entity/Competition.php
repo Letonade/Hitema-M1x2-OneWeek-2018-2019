@@ -43,6 +43,11 @@ class Competition
      */
     private $competiteurCompetitions;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
     public function __construct()
     {
         $this->profilsCategories = new ArrayCollection();
@@ -181,6 +186,32 @@ class Competition
         }
         $this->competiteurCompetitions->remove($competitionCompetiteur);
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompetiteurCompetitions()
+    {
+        return $this->competiteurCompetitions;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @param mixed $nom
+     */
+    public function setNom($nom): void
+    {
+        $this->nom = $nom;
     }
 
 

@@ -23,6 +23,8 @@ class CompetitionController extends Controller
 
         	$form_competition = $request->request->get("competition");
 
+            $nom = $form_competition["nom"];
+
             foreach ($form_competition as $key => $value) {
                 $tmp = explode("_", $key);
                 if($tmp[0]=="Date"){
@@ -36,6 +38,7 @@ class CompetitionController extends Controller
                     $new_competition = new Competition();
                     $new_competition->setDateDebut($date_time_deb);
                     $new_competition->setDateFin($date_time_fin);
+                    $new_competition->setNom($nom);
                     $em->persist($new_competition);
                     //print_r($day."/".$month."/".$year." ".$form_competition["HeureDebut"].":00");
 
