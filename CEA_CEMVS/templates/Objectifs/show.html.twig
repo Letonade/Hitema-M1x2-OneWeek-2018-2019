@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserObjectifs{% endblock %}
+
+{% block body %}
+    <h1>UserObjectifs</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ objectif.id }}</td>
+            </tr>
+            <tr>
+                <th>Objectif</th>
+                <td>{{ objectif.Descriptif }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('objectifs_index') }}">back to list</a>
+
+    <a href="{{ path('objectifs_edit', {'id': objectif.id}) }}">edit</a>
+
+    {{ include('objectifs/deleteorm.html.twig') }}
+{% endblock %}

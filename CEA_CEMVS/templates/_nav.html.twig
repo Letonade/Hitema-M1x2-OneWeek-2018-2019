@@ -21,16 +21,16 @@
        {#
       <li class="nav-item">
         <a class="nav-link" href="#">Leçons</a>
-      </li>
-     {% if is_granted('ROLE_ADMIN') %}
+      </li>#}
+     
       <li class="nav-item">
-        <a class="nav-link" href="{{ path('user_arme_index')}}">Armes</a>
-      </li>
+        <a class="nav-link" href="{{ path('objectifs_index')}}">Objectif</a>
+      </li>{#}
       <li class="nav-item">
         <a class="nav-link" href="{{path('users_index')}}">Utilisateurs</a>
-      </li>
-     {% endif %}
-    </ul>#}
+      </li>#}
+     
+    </ul>
     {% if app.user %}
         <a href="{{path('app_security_logout')}}" type="button" class="btn btn-danger">Déconnexion <i class="fas fa-power-off" ></i></a>
       {% if is_granted('ROLE_ADMIN') %}

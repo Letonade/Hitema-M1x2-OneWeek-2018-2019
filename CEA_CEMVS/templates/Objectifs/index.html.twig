@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserObjectifs index{% endblock %}
+
+{% block body %}
+    <h1>UserObjectifs index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Objectif</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for objectif in objectifs %}
+            <tr>
+                <td>{{ objectif.id }}</td>
+                <td>{{ objectif.Descriptif}}</td>
+                <td>
+                    <a href="{{ path('objectifs_show', {'id': objectif.id}) }}">show</a>
+                    <a href="{{ path('objectifs_edit', {'id': objectif.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('objectifs_new') }}">Create new</a>
+{% endblock %}
