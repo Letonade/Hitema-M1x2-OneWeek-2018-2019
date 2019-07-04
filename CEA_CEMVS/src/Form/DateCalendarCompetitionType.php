@@ -26,6 +26,8 @@ class DateCalendarCompetitionType extends AbstractType
         $builder->add('Saison',ChoiceType::class,[
            "label"=> "Saison",
            "choices"=> $this->tab_saison,
+           'attr' => array('class' => 'form-control'
+                ),
         ])->add('Ajout',SubmitType::class,[
            "label"=> "Ajouts de competitions",
            'attr' => array('class' => 'btn btn-primary'

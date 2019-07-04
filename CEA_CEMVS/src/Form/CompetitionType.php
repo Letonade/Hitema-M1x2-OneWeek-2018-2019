@@ -22,7 +22,7 @@ class CompetitionType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->calendar = $this->makeCalendar(6,6, $options["saison"], $options["saison"]+1);
+        $this->calendar = $this->makeCalendar(8,7, $options["saison"], $options["saison"]+1);
 
         $builder->add('HeureDebut',TextType::class,[
             'label'=>'Heure de début',
@@ -40,6 +40,8 @@ class CompetitionType extends AbstractType
 			"label"=>$value["all"],
             'mapped'=>false,
             'required'=>false,
+            'attr' => array('class' => 'form-check-input'),
+            'label_attr' => array('class' => 'form-check-label'),
 			]);
         }
     }

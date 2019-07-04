@@ -56,11 +56,13 @@ class EntrainementFormType extends AbstractType
         ])
         ;
         foreach ($this->calendar as $key => $value) {
-        	$builder->add('Date_'.$value["allUnder"],CheckboxType::class,[
-			"label"=>$value["all"],
+            $builder->add('Date_'.$value["allUnder"],CheckboxType::class,[
+            "label"=>$value["all"],
             'mapped'=>false,
             'required'=>false,
-			]);
+            'attr' => array('class' => 'form-check-input'),
+            'label_attr' => array('class' => 'form-check-label'),
+            ]);
         }
     }
 
