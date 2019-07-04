@@ -14,7 +14,7 @@ class EntrainementTireur
     /**
      * @ORM\Column(type="boolean")
      */
-    private $presence;
+    private $presence=0;
 
     /**
      * @var User
@@ -40,4 +40,38 @@ class EntrainementTireur
 
         return $this;
     }
+
+    /**
+     * @return User
+     */
+    public function getTireur(): User
+    {
+        return $this->tireur;
+    }
+
+    /**
+     * @param User $tireur
+     */
+    public function setTireur(User $tireur): void
+    {
+        $this->tireur = $tireur;
+    }
+
+    /**
+     * @return Entrainement
+     */
+    public function getEntrainement(): Entrainement
+    {
+        return $this->entrainement;
+    }
+
+    /**
+     * @param Entrainement $entrainement
+     */
+    public function setEntrainement(Entrainement $entrainement): void
+    {
+        $this->entrainement = $entrainement;
+    }
+
+
 }

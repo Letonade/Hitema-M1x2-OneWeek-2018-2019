@@ -246,8 +246,8 @@ class User implements UserInterface
     {
         switch ($this->role)
         {
-            case 1: return ['ROLE_USER'];
-            case 2: return ['ROLE_MODO'];
+            case 1: return ['ROLE_TIREUR'];
+            case 2: return ['ROLE_MA'];
             case 3: return ['ROLE_ADMIN'];
         }
     }

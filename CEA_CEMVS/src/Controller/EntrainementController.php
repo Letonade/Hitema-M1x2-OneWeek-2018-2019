@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Entrainement;
+use App\Entity\EntrainementTireur;
 use App\Entity\EntrainementType;
 use App\Entity\TireurGroupe;
 use App\Form\EntrainementFormType;
@@ -122,10 +123,32 @@ class EntrainementController extends Controller
     }
 
     /**
+     * @Route("/Entrainements/{id}/sinscrirer", requirements={"id":"\d+"}, name="sinsrireEntrainement")
+     */
+    public function sinscrireEntrainementAction(Entrainement $Entrainement,Request $request)
+    {
+        $token = $request->query->get('token');
+        $saison = $request->query->get('saison');
+        if (!$this->isCsrfTokenValid('ENTRAINEMENT_SINSCRIRE',$token))
+        {
+            throw $this->createAccessDeniedException();
+        }
+        $em=$this->getDoctrine()->getManager();
+        $entrainementTireur = new EntrainementTireur();
+        $entrainementTireur->setTireur($this->getUser());
+        $entrainementTireur->setEntrainement($Entrainement);
+        $em->persist($entrainementTireur);
+        $em->flush();
+        return $this->redirectToRoute('app_entrainement_entrainementlist',array("saison"=>$saison));
+    }
+
+
+
+    /**
      * @Route("/Entrainement/{id}")
      */
     public function EntrainemenView(Request $request,Entrainement $entrainement){
-       
+
         return $this->render('entrainement/entrainementVue.html.twig', [
             'Entrainement' => $entrainement,
         ]);
