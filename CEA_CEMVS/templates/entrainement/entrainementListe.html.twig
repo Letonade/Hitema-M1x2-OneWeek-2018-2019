@@ -9,6 +9,7 @@ Entrainements
         <table class="table table-bordered">
             <thead>
             <tr>
+				<th>#</th>
             	<th>Libelle</th>
 				<th>Salle</th>
 				<th>Groupe</th>
@@ -23,6 +24,7 @@ Entrainements
             {% set token2 = csrf_token('ENTRAINEMENT_SINSCRIRE') %}
             {% for Entrainement in Entrainements %}
                 <tr>
+					<td><a href="{{ path('app_entrainement_entrainementview',{id:Entrainement.id, saison:saison}) }}">{{ Entrainement.id }}</a></td>
 					<td>{{ Entrainement.Libelle }}</td>
 					<td>{{ Entrainement.Salle }}</td>
 					<td>{{ Entrainement.TireurGroupe }}</td>

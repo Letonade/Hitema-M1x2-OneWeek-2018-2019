@@ -29,10 +29,67 @@ Entrainements
 				<td>{{ Entrainement.DateDebut|date('H:i:s') }}</td>
 				<td>{{ Entrainement.DateFin|date('H:i:s') }}</td>
 				{% if is_granted('ROLE_ADMIN') %}
-					<td><a class="btn btn-danger" href="{{ path('deleteEntrainement',{id:Entrainement.id,token:token, saison:2019}) }}">Supprimer</a></td>
+					<td><a class="btn btn-danger" href="{{ path('deleteEntrainement',{id:Entrainement.id,token:token, saison:saison}) }}">Supprimer</a></td>
 			    {% endif %}
 			</tr>
             </tbody>
         </table>
     </div>
+	<div class="table-responsive">
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th>Nom</th>
+				<th>Prenom</th>
+				<th>Login</th>
+				<th>Presence</th>
+				<th><a class="btn btn-success" href="{{ path('addTireur', {id : Entrainement.id, saison:saison}) }}">Ajout de Tireur</a></th>
+				<th><a class="btn btn-success" href="{{ path('addMa', {id : Entrainement.id, saison:saison}) }}">Ajout de Maitre d arme</a></th>
+			</tr>
+			</thead>
+			<tbody>
+
+			{% set tokent = csrf_token('ENTRAINEMENTTIREUR_DELETE') %}
+			{% for Profil in Profils %}
+			<tr>
+				<td>{{ Profil.tireur.nom }}</td>
+				<td>{{ Profil.tireur.prenom }}</td>
+				<td>{{ Profil.tireur.login }}</td>
+				<td>{% if Profil.presence %} Present {% else %} Non present {% endif %}</td>
+				{% if is_granted('ROLE_ADMIN') %}
+					<td><a class="btn btn-danger" href="{{ path('deleteEntrainementTireur',{id:Profil.id,token:tokent, saison:saison}) }}">Supprimer</a></td>
+				{% endif %}
+			</tr>
+			{% endfor %}
+
+			</tbody>
+		</table>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th>Nom</th>
+				<th>Prenom</th>
+				<th>Login</th>
+				<th>Presence</th>
+			</tr>
+			</thead>
+			<tbody>
+
+			{% set tokenm = csrf_token('ENTRAINEMENTMA_DELETE') %}
+			{% for Ma in Mas %}
+				<tr>
+					<td>{{ Ma.nom }}</td>
+					<td>{{ Ma.prenom }}</td>
+					<td>{{ Ma.login }}</td>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td><a class="btn btn-danger" href="{{ path('deleteEntrainementMa',{id:Ma.id,ide:Entrainement.id,token:tokenm, saison:saison}) }}">Supprimer</a></td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+
+			</tbody>
+		</table>
+	</div>
 {% endblock %}

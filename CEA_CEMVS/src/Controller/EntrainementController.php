@@ -5,6 +5,9 @@ use App\Entity\Entrainement;
 use App\Entity\EntrainementTireur;
 use App\Entity\EntrainementType;
 use App\Entity\TireurGroupe;
+use App\Entity\User;
+use App\Form\EntrainementAddMaType;
+use App\Form\EntrainementAddTireurType;
 use App\Form\EntrainementFormType;
 use App\Form\DateCalendarEntrainementType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -147,10 +150,132 @@ class EntrainementController extends Controller
     /**
      * @Route("/Entrainement/{id}")
      */
-    public function EntrainemenView(Request $request,Entrainement $entrainement){
+    public function EntrainementView(Request $request,Entrainement $entrainement){
 
+        $profils = $entrainement->getTireurProfils();
+        $mas = $entrainement->getMaProfils();
+
+        $saison = $request->query->get('saison');
         return $this->render('entrainement/entrainementVue.html.twig', [
             'Entrainement' => $entrainement,
+            'Profils' => $profils,
+            'Mas' =>$mas,
+            'saison' => $saison,
         ]);
     }
+
+
+    /**
+     * @Route("/Entrainement/{id}/addT", name="addTireur")
+     */
+    public function EntrainementAddTireurView(Request $request,Entrainement $entrainement){
+
+        $form 			= $this->createForm(EntrainementAddTireurType::class);
+        $form->handleRequest($request);
+        $saison = $request->query->get('saison');
+        if ($form->isSubmitted()&&$form->isValid()) {
+           // print_r("good t");
+            $em=$this->getDoctrine()->getManager();
+            $userRepository = $em->getRepository(User::class);
+            foreach ($request->request->get("entrainement_add_tireur")["Tireurs"] as $tireurId)
+            {
+                //print_r($tireurId);
+                $tireur = $userRepository->findOneBy(['id'=>$tireurId]);
+                $entrainementTireur = new EntrainementTireur();
+                $entrainementTireur->setEntrainement($entrainement);
+                $entrainementTireur->setTireur($tireur);
+                $tireur->addTireurEntrainement($entrainementTireur);
+                $entrainement->addTireurProfil($entrainementTireur);
+                $em->persist($tireur);
+                $em->persist($entrainementTireur);
+                $em->persist($entrainement);
+
+            }
+            $em->flush();
+            return $this->redirectToRoute('app_entrainement_entrainementview',array("id"=>$entrainement->getId(),"saison"=>$saison));
+        }
+
+
+        return $this->render('entrainement/entrainementVueAddT.html.twig', [
+            'Entrainement' => $entrainement,
+            'form' => $form->createView(),
+            'saison' => $saison,
+        ]);
+    }
+
+    /**
+     * @Route("/Entrainement/{id}/addMa", name="addMa")
+     */
+    public function EntrainementAddMaView(Request $request,Entrainement $entrainement){
+
+        $form 			= $this->createForm(EntrainementAddMaType::class);
+        $saison = $request->query->get('saison');
+        $form->handleRequest($request);
+        if ($form->isSubmitted()&&$form->isValid()) {
+            print_r("good m");
+            $em=$this->getDoctrine()->getManager();
+            $userRepository = $em->getRepository(User::class);
+            foreach ($request->request->get("entrainement_add_ma")["MAs"] as $tireurId)
+            {
+                //print_r($tireurId);
+                $ma = $userRepository->findOneBy(['id'=>$tireurId]);
+                $entrainement->addMaProfil($ma);
+                $em->persist($entrainement);
+                $em->flush();
+                return $this->redirectToRoute('app_entrainement_entrainementview',array("id"=>$entrainement->getId(),"saison"=>$saison));
+            }
+        }
+
+
+        return $this->render('entrainement/entrainementVueAddM.html.twig', [
+            'Entrainement' => $entrainement,
+            'form' => $form->createView(),
+            'saison' => $saison,
+        ]);
+    }
+
+    /**
+     * @Route("/Entrainement/{id}/supprimerT", requirements={"id":"\d+"}, name="deleteEntrainementTireur")
+     */
+    public function deleteEntrainementTireurAction(EntrainementTireur $entrainementTireur,Request $request)
+    {
+        $token = $request->query->get('token');
+        $saison = $request->query->get('saison');
+        if (!$this->isCsrfTokenValid('ENTRAINEMENTTIREUR_DELETE',$token))
+        {
+            throw $this->createAccessDeniedException();
+        }
+        $em=$this->getDoctrine()->getManager();
+        $ide = $entrainementTireur->getEntrainement()->getId();
+        $entrainementTireur->getEntrainement()->removeTireurProfil($entrainementTireur);
+        $entrainementTireur->getTireur()->removeTireurEntrainement($entrainementTireur);
+        $em->persist($entrainementTireur->getEntrainement());
+        $em->persist($entrainementTireur->getTireur());
+        $em->remove($entrainementTireur);
+        $em->flush();
+        return $this->redirectToRoute('app_entrainement_entrainementview',array("id"=>$ide,"saison"=>$saison));
+    }
+
+    /**
+     * @Route("/Entrainement/{id}/supprimerM", requirements={"id":"\d+"}, name="deleteEntrainementMa")
+     */
+    public function deleteEntrainementMaAction(User $user,Request $request)
+    {
+        $token = $request->query->get('token');
+        $saison = $request->query->get('saison');
+        $ide = $request->query->get('ide');
+        if (!$this->isCsrfTokenValid('ENTRAINEMENTMA_DELETE',$token))
+        {
+            throw $this->createAccessDeniedException();
+        }
+        $em=$this->getDoctrine()->getManager();
+        $entrainementRepository = $em->getRepository(Entrainement::class);
+        $ent = $entrainementRepository->findOneBy(['id'=>$ide]);
+        $user->removeMaEntrainement($ent);
+        $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('app_entrainement_entrainementview',array("id"=>$ide,"saison"=>$saison));
+    }
+
+
 }
