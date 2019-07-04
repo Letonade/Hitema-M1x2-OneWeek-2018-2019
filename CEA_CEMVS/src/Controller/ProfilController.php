@@ -22,18 +22,14 @@ class ProfilController extends Controller
             'type' => $type,
         ]);
     }
-    
-    /**
-     * @Route("/Profils/{type}")
-     */
-    public function ProfilsList(Request $request, $type){
-        $em=$this->getDoctrine()->getManager();
-        $ProfilsRepository      = $em->getRepository(User::class);
-        $Profils                = $ProfilsRepository->findAll();
 
-        return $this->render('profil/profilListe.html.twig', [
-            'Profils' => $Profils,
-            'type' => $type,
+    /**
+     * @Route("/Profil/{id}")
+     */
+    public function ProfilsVue(Request $request, User $profil){
+
+        return $this->render('profil/profilVue.html.twig', [
+            'Profil' => $profil,
         ]);
     }
 }

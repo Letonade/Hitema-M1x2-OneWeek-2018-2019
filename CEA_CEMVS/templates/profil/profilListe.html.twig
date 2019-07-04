@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Entrainements
+Profils
 {% endblock %}
 
 {% block body %}
@@ -20,6 +20,9 @@ Entrainements
             <tbody>
             {% set token = csrf_token('ENTRAINEMENT_DELETE') %}
             {% for Profil in Profils %}
+            	{% if is_granted('ROLE_ADMIN') %}
+					<td><a class="btn btn-danger" href="{{ path('deleteEntrainement',{id:Entrainement.id,token:token, saison:saison}) }}">Supprimer</a></td>
+                    
                 <tr>
 					<td>{{ Profil.login }}</td>
 					<td>{{ Profil.nom }}</td>
@@ -37,6 +40,7 @@ Entrainements
 						<td><a class="btn btn-success" href="{{ path('sinsrireEntrainement',{id:Entrainement.id,token:token2, saison:saison}) }}">S'inscrire</a></td>
 					{% endif %#}
                 </tr>
+                {% endif %}
             {% endfor %}
             </tbody>
         </table>
