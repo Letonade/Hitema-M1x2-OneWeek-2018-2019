@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class DateCalendarEntrainementType extends AbstractType
 {
@@ -25,6 +26,15 @@ class DateCalendarEntrainementType extends AbstractType
         $builder->add('Saison',ChoiceType::class,[
            "label"=> "Saison",
            "choices"=> $this->tab_saison,
-        ]);
+        ])->add('Ajout',SubmitType::class,[
+           "label"=> "Ajouts d'entrainements",
+           'attr' => array('class' => 'btn btn-primary'
+                ),
+        ])->add('Visuel',SubmitType::class,[
+           "label"=> "Table des entrainements",
+           'attr' => array('class' => 'btn btn-primary'
+                ),
+        ])
+        ;
     }
 }
