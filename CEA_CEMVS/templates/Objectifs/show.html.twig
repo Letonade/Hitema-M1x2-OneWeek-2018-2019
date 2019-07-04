@@ -18,9 +18,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('objectifs_index') }}">back to list</a>
+    <a  class="btn btn-primary" href="{{ path('objectifs_index') }}">back to list</a>
 
-    <a href="{{ path('objectifs_edit', {'id': objectif.id}) }}">edit</a>
+    <a  class="btn btn-primary" href="{{ path('objectifs_edit', {'id': objectif.id}) }}">edit</a>
 
     {{ include('objectifs/deleteorm.html.twig') }}
 {% endblock %}
