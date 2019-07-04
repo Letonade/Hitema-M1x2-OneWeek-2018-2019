@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 
 class CompetitionType extends AbstractType
 {
@@ -37,6 +38,15 @@ class CompetitionType extends AbstractType
         ->add('nom', TextType::class,[
             'label'=>'Nom de la competition',
             'attr' => array('class' => 'form-control timepicker'),
+        ])->add('Check All',ButtonType::class,[
+            'label'=>'Check All',
+            'attr' => array('class' => 'form-control'
+                , 'onclick'=>"$('.form-check-input').attr('checked', true);"),
+        ])
+        ->add('Uncheck All',ButtonType::class,[
+            'label'=>'Uncheck All',
+            'attr' => array('class' => 'form-control'
+                , 'onclick'=>"$('.form-check-input').attr('checked', false);"),
         ])
         ;
         foreach ($this->calendar as $key => $value) {

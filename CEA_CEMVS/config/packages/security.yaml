@@ -50,7 +50,7 @@ security:
 
             logout:
                 path: app_security_logout
-                target: index
+                target: news
 
 
             # https://symfony.com/doc/current/security/form_login_setup.html
