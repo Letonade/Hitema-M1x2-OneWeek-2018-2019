@@ -19,6 +19,17 @@ class CompetitionRepository extends ServiceEntityRepository
         parent::__construct($registry, Competition::class);
     }
 
+    public function getMyCompetitionByDate(\DateTime $date_debut, \DateTime $date_fin){
+        return $this->createQueryBuilder('COMP')
+            ->andWhere('COMP.DateDebut > :date_debut')
+            ->andWhere('COMP.DateFin < :date_fin')
+            ->setParameter('date_debut', $date_debut)
+            ->setParameter('date_fin', $date_fin)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Competition[] Returns an array of Competition objects
     //  */

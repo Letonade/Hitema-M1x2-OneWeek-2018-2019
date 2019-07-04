@@ -19,6 +19,17 @@ class EntrainementRepository extends ServiceEntityRepository
         parent::__construct($registry, Entrainement::class);
     }
 
+    public function getMyEntrainementByDate(\DateTime $date_debut, \DateTime $date_fin){
+        return $this->createQueryBuilder('ENT')
+            ->andWhere('ENT.DateDebut > :date_debut')
+            ->andWhere('ENT.DateFin < :date_fin')
+            ->setParameter('date_debut', $date_debut)
+            ->setParameter('date_fin', $date_fin)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Entrainement[] Returns an array of Entrainement objects
     //  */

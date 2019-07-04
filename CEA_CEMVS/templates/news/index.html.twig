@@ -28,7 +28,40 @@
 	      <footer class="blockquote-footer">Citation de  <cite title="Source Title">Classic Event Man</cite></footer>
 	    </blockquote>
 	  </div>
+	</div>	
+
+	<div class="card">
+	  <div class="card-header">
+	    Prochains entrainements
+	  </div>
+	  <div class="card-body">
+	    <blockquote class="blockquote mb-0">
+	    	{% for Entrainement in Entrainements %}
+				Le <i>{{ Entrainement.DateFin|date('Y-m-d') }} <b>"{{ Entrainement.Libelle }}"</b></i> ({{ Entrainement.TireurGroupe }}/{{ Entrainement.EntrainementType }}):
+				De {{ Entrainement.DateDebut|date('H:i:s') }} à {{ Entrainement.DateFin|date('H:i:s') }} en salle: <i>"{{ Entrainement.Salle }}"</i>
+	    	<br>
+            {% endfor %}
+	      <footer class="blockquote-footer">Citation de  <cite title="Source Title">Classic Prog Man</cite></footer>
+	    </blockquote>
+	  </div>
 	</div>
+
+	<div class="card">
+	  <div class="card-header">
+	    Prochaines competitions
+	  </div>
+	  <div class="card-body">
+	    <blockquote class="blockquote mb-0">
+	    	{% for Competition in Competitions %}
+				Le <i>{{ Competition.DateFin|date('Y-m-d') }} <b>"{{ Competition.nom }}"</b></i>
+				De {{ Competition.DateDebut|date('H:i:s') }} à {{ Competition.DateFin|date('H:i:s') }}
+	    	<br>
+            {% endfor %}
+	      <footer class="blockquote-footer">Citation de  <cite title="Source Title">Classic Prog Man</cite></footer>
+	    </blockquote>
+	  </div>
+	</div>
+
 	<div class="row">
 	  <div class="col-sm-6 mb-3 mb-md-0">
 	    <div class="card">
