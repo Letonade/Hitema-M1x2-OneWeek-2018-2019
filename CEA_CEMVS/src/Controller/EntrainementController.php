@@ -31,15 +31,15 @@ class EntrainementController extends Controller
             $salle = $form_entrainement["Salle"];
             $tireurGroupe = $tireurGroupeRepository->findOneBy(['id'=>$form_entrainement["tireurGroupe"]]);
             $entrainementType = $entrainementTypeRepository->findOneBy(['id'=>$form_entrainement["entrainementType"]]);
-        	foreach ($form_entrainement as $key => $value) {
-        		$tmp = explode("_", $key);
-        		if($tmp[0]=="Date"){
-        			$day = substr("00".$tmp[1], (strlen($tmp[1])), 2);
-					$month = $tmp[2];
-					$year = $tmp[3];
-					//variable pour bdd
-					$date_time_deb = new \DateTime($day."-".$month."-".$year." ".$form_entrainement["HeureDebut"].":00", new \DateTimeZone("Europe/Paris"));
-					$date_time_fin = new \DateTime($day."-".$month."-".$year." ".$form_entrainement["HeureFin"].":00", new \DateTimeZone("Europe/Paris"));
+            foreach ($form_entrainement as $key => $value) {
+                $tmp = explode("_", $key);
+                if($tmp[0]=="Date"){
+                    $day = substr("00".$tmp[1], (strlen($tmp[1])), 2);
+                    $month = $tmp[2];
+                    $year = $tmp[3];
+                    //variable pour bdd
+                    $date_time_deb = new \DateTime($day."-".$month."-".$year." ".$form_entrainement["HeureDebut"].":00", new \DateTimeZone("Europe/Paris"));
+                    $date_time_fin = new \DateTime($day."-".$month."-".$year." ".$form_entrainement["HeureFin"].":00", new \DateTimeZone("Europe/Paris"));
                     
                     $new_entrainement = new Entrainement();
                     $new_entrainement->setLibelle($libelle);
@@ -51,10 +51,10 @@ class EntrainementController extends Controller
                     $em->persist($new_entrainement);
                     //print_r($day."/".$month."/".$year." ".$form_entrainement["HeureDebut"].":00");
 
-        		}
-        	}
+                }
+            }
             $em->flush();
-        	/*
+            /*
             $em = $this->getDoctrine()->getManager();
             $em->persist($Entrainements);
             $em->flush();

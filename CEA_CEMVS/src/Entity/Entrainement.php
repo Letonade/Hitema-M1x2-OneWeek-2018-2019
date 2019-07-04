@@ -178,22 +178,6 @@ class Entrainement
         return $this->maProfils;
     }
 
-    /**
-     * @return EntrainementType
-     */
-    public function getEntrainementType(): ?EntrainementType
-    {
-        return $this->entrainementType;
-    }
-
-    /**
-     * @param EntrainementType $entrainementType
-     */
-    public function setEntrainementType(?EntrainementType $entrainementType): void
-    {
-        $this->entrainementType = $entrainementType;
-    }
-
     public function addLecon(Lecon $lecon) : Entrainement
     {
         if($this->lecons->contains($lecon)){
@@ -235,8 +219,23 @@ class Entrainement
      */
     public function setTireurGroupe(?TireurGroupe $tireurGroupe): void
     {
-        $this->tireurGroup = $tireurGroupe;
+        $this->tireurGroupe = $tireurGroupe;
     }
 
+    /**
+     * @return EntrainementType
+     */
+    public function getEntrainementType(): ?EntrainementType
+    {
+        return $this->entrainementType;
+    }
+
+    /**
+     * @param EntrainementType $entrainementType
+     */
+    public function setEntrainementType(?EntrainementType $entrainementType): void
+    {
+        $this->entrainementType = $entrainementType;
+    }
 
 }
