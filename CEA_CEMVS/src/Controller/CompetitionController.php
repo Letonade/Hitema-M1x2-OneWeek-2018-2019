@@ -105,4 +105,14 @@ class CompetitionController extends Controller
         $em->flush();
         return $this->redirectToRoute('app_competition_competitionlist',array("saison"=>$saison));
     }
+
+    /**
+     * @Route("/Competition/{id}")
+     */
+    public function CompetitionView(Request $request,Competition $competition){
+       
+        return $this->render('competition/competitionVue.html.twig', [
+            'Competition' => $competition,
+        ]);
+    }
 }

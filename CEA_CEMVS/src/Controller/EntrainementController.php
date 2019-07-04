@@ -120,4 +120,14 @@ class EntrainementController extends Controller
         $em->flush();
         return $this->redirectToRoute('app_entrainement_entrainementlist',array("saison"=>$saison));
     }
+
+    /**
+     * @Route("/Entrainement/{id}")
+     */
+    public function EntrainemenView(Request $request,Entrainement $entrainement){
+       
+        return $this->render('entrainement/entrainementVue.html.twig', [
+            'Entrainement' => $entrainement,
+        ]);
+    }
 }
