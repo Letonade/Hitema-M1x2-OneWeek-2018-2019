@@ -33,6 +33,9 @@ class TireurGroupe
         $this->profils = new ArrayCollection();
     }
 
+    public function __toString(){
+        return $this->Nom;
+    }
 
     public function getNom(): ?string
     {
@@ -66,6 +69,16 @@ class TireurGroupe
 
     }
 
+    /**
+     * @return mixed
+     */
+    public function getProfils()
+    {
+        return $this->profils;
+    }
+
+
+
     public function addEntrainement(Entrainement $entrainement) : TireurGroupe
     {
         if($this->entrainements->contains($entrainement)){
@@ -85,4 +98,14 @@ class TireurGroupe
         return $this;
 
     }
+
+    /**
+     * @return mixed
+     */
+    public function getEntrainements()
+    {
+        return $this->entrainements;
+    }
+
+
 }
