@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class EntrainementController extends Controller
 {
     /**
-     * @Route("/Entrainements/{saison}")
+     * @Route("/EntrainementsAdd/{saison}")
      */
-    public function Entrainement(Request $request, $saison){
+    public function EntrainementAdd(Request $request, $saison){
     	$Entrainements 	= new Entrainement();
         $form 			= $this->createForm(EntrainementFormType::class, $Entrainements, array("saison" => $saison));
         $form->handleRequest($request);
@@ -62,7 +62,7 @@ class EntrainementController extends Controller
             //return $this->redirectToRoute('/Entrainements/'.$saison);
         }
 
-        return $this->render('entrainement/entrainement.html.twig', [
+        return $this->render('entrainement/entrainementAdd.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -74,14 +74,50 @@ class EntrainementController extends Controller
         $form = $this->createForm(DateCalendarEntrainementType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted()&&$form->isValid()) {
-        	//print_r($request->request->get("date_calendar_entrainement","Saison")["Saison"]);
-            return $this->redirectToRoute('app_entrainement_entrainement',array(
-            	"saison" => $request->request->get("date_calendar_entrainement","Saison")["Saison"],
-            ));
+            if ($form->get('Ajout')->isClicked()){
+                return $this->redirectToRoute('app_entrainement_entrainementadd',array(
+                    "saison" => $request->request->get("date_calendar_entrainement","Saison")["Saison"],
+                ));
+            }elseif ($form->get('Visuel')->isClicked()){
+                return $this->redirectToRoute('app_entrainement_entrainementlist',array(
+                    "saison" => $request->request->get("date_calendar_entrainement","Saison")["Saison"],
+                ));
+            }
         }
 
         return $this->render('entrainement/DateCalendarEntrainement.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/Entrainements/{saison}")
+     */
+    public function EntrainementList(Request $request, $saison){
+        $em=$this->getDoctrine()->getManager();
+        $EntrainementRepository     = $em->getRepository(Entrainement::class);
+        $Entrainements              = $EntrainementRepository->findAll();
+
+        return $this->render('entrainement/entrainementListe.html.twig', [
+            'Entrainements' => $Entrainements,
+            'saison' => $saison,
+        ]);
+    }
+
+    /**
+     * @Route("/Entrainements/{id}/supprimer", requirements={"id":"\d+"}, name="deleteEntrainement")
+     */
+    public function deleteEntrainementAction(Entrainement $Entrainement,Request $request)
+    {
+        $token = $request->query->get('token');
+        $saison = $request->query->get('saison');
+        if (!$this->isCsrfTokenValid('ENTRAINEMENT_DELETE',$token))
+        {
+            throw $this->createAccessDeniedException();
+        }
+        $em=$this->getDoctrine()->getManager();
+        $em->remove($Entrainement);
+        $em->flush();
+        return $this->redirectToRoute('app_entrainement_entrainementlist',array("saison"=>$saison));
     }
 }

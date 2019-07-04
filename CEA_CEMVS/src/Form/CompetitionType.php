@@ -24,7 +24,7 @@ class EntrainementFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->calendar = $this->makeCalendar(8,7, $options["saison"], $options["saison"]+1);
+        $this->calendar = $this->makeCalendar(6,6, $options["saison"], $options["saison"]+1);
 
         $builder->add('Libelle',TextType::class,[
            "label"=> "Libelle",
@@ -39,20 +39,6 @@ class EntrainementFormType extends AbstractType
             'label'=>'Heure de fin',
             'mapped'=>false,
            'attr' => array('class' => 'form-control timepicker'),
-        ])
-        ->add('Salle',TextType::class,[
-            'label'=>'Salle',
-           'attr' => array('class' => 'form-control'),
-        ])
-        ->add('entrainementType',EntityType::class,[
-            'label'=>'Type',
-            'class'=> EntrainementType::class,
-           'attr' => array('class' => 'form-control'),
-        ])
-        ->add('tireurGroupe',EntityType::class,[
-            'label'=>'Groupe',
-            'class'=> TireurGroupe::class,
-           'attr' => array('class' => 'form-control'),
         ])
         ;
         foreach ($this->calendar as $key => $value) {

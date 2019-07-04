@@ -70,7 +70,6 @@ class Entrainement
         $this->lecons = new ArrayCollection();
     }
 
-
     public function getLibelle(): ?string
     {
         return $this->Libelle;
