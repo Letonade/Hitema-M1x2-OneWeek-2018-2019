@@ -32,7 +32,8 @@
         <a href="{{path('logout')}}" type="button" class="btn btn-danger">Déconnexion <i class="fas fa-power-off" ></i></a>
     {% else %}#}
         <a href="{{path('app_security_connexion')}}" type="button" class="btn btn-success">Connexion <i class="fas fa-sign-in-alt"></i></a>
+         {% if is_granted('ROLE_ADMIN') %}
           <a href="{{path('inscription')}}" type="button" class="btn btn-success">Inscription <i class="fas fa-sign-in-alt"></i></a>
-    {#{% endif %}#}
+    {% endif %}
   </div>
 </nav>
