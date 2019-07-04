@@ -32,7 +32,11 @@ class TireurGroupe
         $this->entrainements = new ArrayCollection();
         $this->profils = new ArrayCollection();
     }
-
+    public function getIdTrait(): ?int
+    {
+        return $this->IdTrait;
+    }
+    
     public function __toString(){
         return $this->Nom;
     }
@@ -72,7 +76,7 @@ class TireurGroupe
     /**
      * @return mixed
      */
-    public function getProfils()
+    public function getProfils() 
     {
         return $this->profils;
     }

@@ -26,56 +26,45 @@ class GroupeController extends AbstractController
     /**
      * @Route("/new", name="groupe_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
-    {
+    public function new(Request $request)
+    { 
         $groupe = new TireurGroupe();
         $form = $this->createForm(TireurGroupeType::class, $groupe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $tireurs = $groupe->getTireurs();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($groupe);
-            foreach($tireurs as $tireur){
-                $tireur->setGroupe($groupe);
-            }
-            $entityManager->persist($tireur);
             $entityManager->flush();
             return $this->redirectToRoute('groupe_index');
         }
-        return $this->render('groupe/new.html.twig', [
-            'groupe' => $groupe,
+        return $this->render('groupe/newGroupe.html.twig', [
+            'TireurGroupe' => $groupe,
             'form' => $form->createView(),
         ]);
     }
     /**
      * @Route("/{id}", name="groupe_show", methods={"GET"})
      */
-    public function show(Groupe $groupe): Response
+    public function show(TireurGroupe $groupe)
     {
-        return $this->render('groupe/show.html.twig', [
-            'groupe' => $groupe,
+        return $this->render('groupe/showgroupe.html.twig', [
+            'TireurGroupe' => $groupe,
         ]);
     }
     /**
      * @Route("/{id}/edit", name="groupe_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Groupe $groupe): Response
+    public function edit(Request $request, TireurGroupe $groupe): Response
     {
-        $form = $this->createForm(GroupeType::class, $groupe);
+        $form = $this->createForm(TireurGroupeType::class, $groupe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $tireurs = $groupe->getTireurs();
-            foreach($tireurs as $tireur){
-                $tireur->setGroupe($groupe);
-            }
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($tireur);
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('groupe_index', [
                 'id' => $groupe->getId(),
             ]);
         }
-        return $this->render('groupe/edit.html.twig', [
+        return $this->render('groupe/editgroupe.html.twig', [
             'groupe' => $groupe,
             'form' => $form->createView(),
         ]);
@@ -83,9 +72,9 @@ class GroupeController extends AbstractController
     /**
      * @Route("/{id}", name="groupe_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Groupe $groupe): Response
+    public function delete(Request $request, TireurGroupe $groupe): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$groupe->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$groupe-> getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($groupe);
             $entityManager->flush();

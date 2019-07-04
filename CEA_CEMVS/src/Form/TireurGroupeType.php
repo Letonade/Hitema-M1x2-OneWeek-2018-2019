@@ -12,17 +12,8 @@ class TireurGroupeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('tireurs',EntityType::class,array(
-                "class" => User::class,
-                "choice_label"=>"prenom",
-                "multiple"=>TRUE,
-                "required" => false,
-                "query_builder"=>function(EntityRepository $er)
-                {
-                    return $er->createQueryBuilder('t')->where('t.groupe is null');
-                }
-            ));
+            ->add('nom')
+        ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {

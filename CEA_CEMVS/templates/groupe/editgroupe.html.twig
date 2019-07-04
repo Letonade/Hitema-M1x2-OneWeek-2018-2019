@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Groupe{% endblock %}
+{% block title %}Edit Groupe{% endblock %}
 
 {% block body %}
-    <h1>Create new Groupe</h1>
+    <h1>Edit Groupe</h1>
 
-    {{ include('groupe/formadd.html.twig') }}
+    {{ include('groupe/formadd.html.twig', {'button_label ': 'Update'}) }}
 
-    
     <a class="btn btn-primary" href="{{ path('groupe_index') }}">return to list</a>
+
 {% endblock %}

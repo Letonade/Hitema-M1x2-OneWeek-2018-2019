@@ -9,27 +9,28 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nom</th>
+                <th>Name</th>
                 <th>actions</th>
             </tr>
         </thead>
-        <tbody>
-        {% for groupe in TireurGroupe %}
+        <tbody> 
+        {% for TireurGroupe in groupes %}
             <tr>
-                <td>{{ groupe.id }}</td>
-                <td>{{ groupe.nom }}</td>
+                <td>{{ TireurGroupe.id }}</td>
+                <td>{{ TireurGroupe.Nom }}</td>
                 <td>
-                    <a href="{{ path('groupeShow', {'id': groupe.id}) }}">show</a>
-                
+                     <a class="btn btn-primary" href="{{ path('groupe_delete', {'id': TireurGroupe.id}) }}">Delete</a>
+                    <a class="btn btn-primary" href="{{ path('groupe_show', {'id': TireurGroupe.id}) }}">show</a>
+                    <a class="btn btn-primary" href="{{ path('groupe_edit', {'id': TireurGroupe.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">groupe not found 404</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('groupe_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('groupe_new') }}">Create new</a>
 {% endblock %}

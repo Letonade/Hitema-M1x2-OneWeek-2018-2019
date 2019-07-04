@@ -280,7 +280,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getNom(): ?string
+    public function getNom(): ?stringsetGroupe
     {
         return $this->nom;
     }
