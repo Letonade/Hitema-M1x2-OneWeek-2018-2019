@@ -137,6 +137,9 @@ class User implements UserInterface
         $this->arbitres = new ArrayCollection();
 
     }
+    public function __toString(){
+        return $this->nom;
+    }
 
     public function addSujetObjectif(Objectif $objectif) : User
     {

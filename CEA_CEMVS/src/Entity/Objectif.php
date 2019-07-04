@@ -94,7 +94,7 @@ class Objectif
     /**
      * @return User
      */
-    public function getProfilSujet(): User
+    public function getProfilSujet(): ?User
     {
         return $this->profilSujet;
     }

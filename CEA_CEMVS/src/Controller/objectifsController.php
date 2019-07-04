@@ -36,7 +36,7 @@ class objectifsController extends AbstractController
             return $this->redirectToRoute('objectifs_index');
         }
         return $this->render('objectifs/new.html.twig', [
-            'Descriptif' => $Objectif,
+            'Objectif' => $Objectif,
             'form' => $form->createView(),
         ]);
     }
@@ -54,7 +54,7 @@ class objectifsController extends AbstractController
      */
     public function edit(Request $request, Objectif $Objectif)
     {
-        $form = $this->createForm(ObjectifsType::class, $Objectif);
+        $form = $this->createForm(ObjectifType::class, $Objectif);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
