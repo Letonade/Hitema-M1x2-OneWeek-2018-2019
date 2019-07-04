@@ -147,6 +147,16 @@ class Entrainement
         return $this->tireurProfils;
     }
 
+    public function getTireurProfilUsers()
+    {
+        $return = null;
+        foreach ($this->tireurProfils as $k=>$profil)
+        {
+            $return[$k]=$profil->getTireur();
+        }
+        return $return;
+    }
+
     public function addMaProfil(User $user) : Entrainement
     {
         if($this->maProfils->contains($user)){
