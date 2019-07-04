@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class User
  * @package App\Entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\ProfilRepository")
  */
 
 class User implements UserInterface
@@ -373,7 +373,7 @@ class User implements UserInterface
     /**
      * @return ProfilCategorie
      */
-    public function getProfilCategorie(): ProfilCategorie
+    public function getProfilCategorie(): ?ProfilCategorie
     {
         return $this->profilCategorie;
     }
@@ -554,7 +554,7 @@ class User implements UserInterface
     /**
      * @return TireurGroupe
      */
-    public function getTireurGroupe(): TireurGroupe
+    public function getTireurGroupe(): ?TireurGroupe
     {
         return $this->tireurGroupe;
     }

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block checkbox_row %}
+    <div class="form-check">
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+        {{ form_label(form) }}
+    </div>
+{% endblock %}
+
+{% block body %}
+	<h1 class="h3 mb-3 font-weight-normal">Entrainements</h1>
+    {{ form_start(form) }}
+    {{form_widget(form) }}
+	<button class="btn btn-primary" style="">Valider l'enregistrement</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block title %}
+Entrainements
+{% endblock %}
