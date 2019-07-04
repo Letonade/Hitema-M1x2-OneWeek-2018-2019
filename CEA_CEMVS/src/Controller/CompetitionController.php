@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Competition;
 use App\Form\CompetitionType;
-use App\Form\DateCalendarEntrainementType;
+use App\Form\DateCalendarCompetitionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,110 +12,94 @@ use Symfony\Component\Routing\Annotation\Route;
 class CompetitionController extends Controller
 {
     /**
-     * @Route("/EntrainementsAdd/{saison}")
+     * @Route("/CompetitionsAdd/{saison}")
      */
-    public function EntrainementAdd(Request $request, $saison){
-    	$Entrainements 	= new Entrainement();
-        $form 			= $this->createForm(EntrainementFormType::class, $Entrainements, array("saison" => $saison));
+    public function CompetitionAdd(Request $request, $saison){
+    	$Competitions 	= new Competition();
+        $form 			= $this->createForm(CompetitionType::class, $Competitions, array("saison" => $saison));
         $form->handleRequest($request);
         if ($form->isSubmitted()&&$form->isValid()) {
             $em=$this->getDoctrine()->getManager();
-            $tireurGroupeRepository = $em->getRepository(TireurGroupe::class);
-            $entrainementTypeRepository = $em->getRepository(EntrainementType::class);
 
-        	$form_entrainement = $request->request->get("entrainement_form");
-            // Var fixe
-            $libelle = $form_entrainement["Libelle"];
-            $salle = $form_entrainement["Salle"];
-            $tireurGroupe = $tireurGroupeRepository->findOneBy(['id'=>$form_entrainement["tireurGroupe"]]);
-            $entrainementType = $entrainementTypeRepository->findOneBy(['id'=>$form_entrainement["entrainementType"]]);
-            foreach ($form_entrainement as $key => $value) {
+        	$form_competition = $request->request->get("competition");
+
+            foreach ($form_competition as $key => $value) {
                 $tmp = explode("_", $key);
                 if($tmp[0]=="Date"){
                     $day = substr("00".$tmp[1], (strlen($tmp[1])), 2);
                     $month = $tmp[2];
                     $year = $tmp[3];
                     //variable pour bdd
-                    $date_time_deb = new \DateTime($day."-".$month."-".$year." ".$form_entrainement["HeureDebut"].":00", new \DateTimeZone("Europe/Paris"));
-                    $date_time_fin = new \DateTime($day."-".$month."-".$year." ".$form_entrainement["HeureFin"].":00", new \DateTimeZone("Europe/Paris"));
+                    $date_time_deb = new \DateTime($day."-".$month."-".$year." ".$form_competition["HeureDebut"].":00", new \DateTimeZone("Europe/Paris"));
+                    $date_time_fin = new \DateTime($day."-".$month."-".$year." ".$form_competition["HeureFin"].":00", new \DateTimeZone("Europe/Paris"));
                     
-                    $new_entrainement = new Entrainement();
-                    $new_entrainement->setLibelle($libelle);
-                    $new_entrainement->setSalle($salle);
-                    $new_entrainement->setTireurGroupe($tireurGroupe);
-                    $new_entrainement->setEntrainementType($entrainementType);
-                    $new_entrainement->setDateDebut($date_time_deb);
-                    $new_entrainement->setDateFin($date_time_fin);
-                    $em->persist($new_entrainement);
-                    //print_r($day."/".$month."/".$year." ".$form_entrainement["HeureDebut"].":00");
+                    $new_competition = new Competition();
+                    $new_competition->setDateDebut($date_time_deb);
+                    $new_competition->setDateFin($date_time_fin);
+                    $em->persist($new_competition);
+                    //print_r($day."/".$month."/".$year." ".$form_competition["HeureDebut"].":00");
 
                 }
             }
             $em->flush();
-            /*
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($Entrainements);
-            $em->flush();
-            */
-            //return $this->redirectToRoute('/Entrainements/'.$saison);
         }
 
-        return $this->render('entrainement/entrainementAdd.html.twig', [
+        return $this->render('competition/competitionAdd.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/DateCalendarEntrainements")
+     * @Route("/DateCalendarCompetitions")
      */
-    public function DateCalendarEntrainement(Request $request){
-        $form = $this->createForm(DateCalendarEntrainementType::class);
+    public function DateCalendarCompetition(Request $request){
+        $form = $this->createForm(DateCalendarCompetitionType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted()&&$form->isValid()) {
             if ($form->get('Ajout')->isClicked()){
-                return $this->redirectToRoute('app_entrainement_entrainementadd',array(
-                    "saison" => $request->request->get("date_calendar_entrainement","Saison")["Saison"],
+                return $this->redirectToRoute('app_competition_competitionadd',array(
+                    "saison" => $request->request->get("date_calendar_competition","Saison")["Saison"],
                 ));
             }elseif ($form->get('Visuel')->isClicked()){
-                return $this->redirectToRoute('app_entrainement_entrainementlist',array(
-                    "saison" => $request->request->get("date_calendar_entrainement","Saison")["Saison"],
+                return $this->redirectToRoute('app_competition_competitionlist',array(
+                    "saison" => $request->request->get("date_calendar_competition","Saison")["Saison"],
                 ));
             }
         }
 
-        return $this->render('entrainement/DateCalendarEntrainement.html.twig', [
+        return $this->render('competition/DateCalendarCompetition.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/Entrainements/{saison}")
+     * @Route("/Competitions/{saison}")
      */
-    public function EntrainementList(Request $request, $saison){
+    public function CompetitionList(Request $request, $saison){
         $em=$this->getDoctrine()->getManager();
-        $EntrainementRepository     = $em->getRepository(Entrainement::class);
-        $Entrainements              = $EntrainementRepository->findAll();
+        $CompetitionRepository     = $em->getRepository(Competition::class);
+        $Competitions              = $CompetitionRepository->findAll();
 
-        return $this->render('entrainement/entrainementListe.html.twig', [
-            'Entrainements' => $Entrainements,
+        return $this->render('competition/competitionListe.html.twig', [
+            'Competitions' => $Competitions,
             'saison' => $saison,
         ]);
     }
 
     /**
-     * @Route("/Entrainements/{id}/supprimer", requirements={"id":"\d+"}, name="deleteEntrainement")
+     * @Route("/Competitions/{id}/supprimer", requirements={"id":"\d+"}, name="deleteCompetition")
      */
-    public function deleteEntrainementAction(Entrainement $Entrainement,Request $request)
+    public function deleteCompetitionAction(Competition $Competition,Request $request)
     {
         $token = $request->query->get('token');
         $saison = $request->query->get('saison');
-        if (!$this->isCsrfTokenValid('ENTRAINEMENT_DELETE',$token))
+        if (!$this->isCsrfTokenValid('COMPETITION_DELETE',$token))
         {
             throw $this->createAccessDeniedException();
         }
         $em=$this->getDoctrine()->getManager();
-        $em->remove($Entrainement);
+        $em->remove($Competition);
         $em->flush();
-        return $this->redirectToRoute('app_entrainement_entrainementlist',array("saison"=>$saison));
+        return $this->redirectToRoute('app_competition_competitionlist',array("saison"=>$saison));
     }
 }

@@ -5,8 +5,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\EntrainementType;
-use App\Entity\TireurGroupe;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -14,7 +12,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
-class EntrainementFormType extends AbstractType
+class CompetitionType extends AbstractType
 {
 	private $calendar;
 
@@ -26,11 +24,7 @@ class EntrainementFormType extends AbstractType
     {
         $this->calendar = $this->makeCalendar(6,6, $options["saison"], $options["saison"]+1);
 
-        $builder->add('Libelle',TextType::class,[
-           "label"=> "Libelle",
-           'attr' => array('class' => 'form-control'),
-        ])
-        ->add('HeureDebut',TextType::class,[
+        $builder->add('HeureDebut',TextType::class,[
             'label'=>'Heure de début',
             'mapped'=>false,
            'attr' => array('class' => 'form-control timepicker'),

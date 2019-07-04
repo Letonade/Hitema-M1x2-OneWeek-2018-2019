@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<h1 class="h3 mb-3 font-weight-normal">Sélections des saison d'entrainement</h1>
+	<h1 class="h3 mb-3 font-weight-normal">Competitions</h1>
     {{ form_start(form) }}
     {{form_widget(form) }}
+	<button class="btn btn-primary" style="">Valider l'enregistrement</button>
     {{ form_end(form) }}
 {% endblock %}
 
 {% block title %}
-Entrainements
+Competitions
 {% endblock %}

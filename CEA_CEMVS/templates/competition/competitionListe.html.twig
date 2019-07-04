@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Entrainements
+{% endblock %}
+
+{% block body %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+				<th>Date</th>
+				<th>Heure de début</th>
+				<th>Heure de fin</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set token = csrf_token('COMPETITION_DELETE') %}
+            {% for Competition in Competitions %}
+                <tr>
+					<td>{{ Competition.DateFin|date('Y-m-d') }}</td>
+					<td>{{ Competition.DateDebut|date('H:i:s') }}</td>
+					<td>{{ Competition.DateFin|date('H:i:s') }}</td>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td><a class="btn btn-danger" href="{{ path('deleteCompetition',{id:Competition.id,token:token, saison:saison}) }}">Supprimer</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
