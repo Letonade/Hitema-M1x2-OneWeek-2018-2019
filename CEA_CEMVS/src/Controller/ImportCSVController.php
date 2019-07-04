@@ -15,6 +15,7 @@ class ImportCSVController extends Controller
      */
     public function ImportCSVAction(UserPasswordEncoderInterface $encoder){
 
+        $form = $this->createForm(UserType::class);
         $user_table = array(); // Stockage
         $line = 0;
         // Import CSV 
@@ -70,7 +71,7 @@ class ImportCSVController extends Controller
         $em->flush();
 
         // Renvoi de la réponse
-          return $this->render('news/index.html.twig');
+          return $this->render('csvImport/index.html.twig');
 
         /*return $this->render('security/connexion.html.twig',[
             'error'=> $utils->getLastAuthenticationError(),

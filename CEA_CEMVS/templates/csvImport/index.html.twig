@@ -1,0 +1,10 @@
+{% block body %}
+    <div class="container mt-5" style="border:1px solid #eee;">
+    <div class="form-group text-center rounded" >
+    <h3  class="text-center mb-4 bg-primary" style="color:#fff;padding:20px;"> Ajouter uun csv</h3>
+
+    {{ form_start(form) }}
+    {{form_widget(form) }}
+    <button class="btn btn-primary" style="">Enregistrer</button>
+    {{ form_end(form) }}
+{% endblock %}
