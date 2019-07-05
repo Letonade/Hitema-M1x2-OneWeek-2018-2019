@@ -55,7 +55,7 @@ class CompetitionCompetiteur
     /**
      * @return User
      */
-    public function getProfil(): User
+    public function getProfil(): ?User
     {
         return $this->profil;
     }

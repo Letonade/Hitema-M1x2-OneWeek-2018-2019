@@ -3,6 +3,9 @@ namespace App\Controller;
 
 use App\Entity\Competition;
 use App\Entity\CompetitionCompetiteur;
+use App\Entity\User;
+use App\Form\AddCompititeurCompetitionType;
+use App\Form\AddEncadrantCompetitionType;
 use App\Form\CompetitionType;
 use App\Form\DateCalendarCompetitionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -113,10 +116,12 @@ class CompetitionController extends Controller
     public function CompetitionView(Request $request,Competition $competition){
 
         $competiteurs = $competition->getCompetiteurCompetitions();
+        $encadrants = $competition->getEncadrants();
         $saison = $request->query->get('saison');
         return $this->render('competition/competitionVue.html.twig', [
             'Competition' => $competition,
             'competiteurs' => $competiteurs,
+            'encadrants' => $encadrants,
             "saison"=>$saison,
         ]);
     }
@@ -157,6 +162,93 @@ class CompetitionController extends Controller
         $em->persist($competition);
         $em->flush();
         return $this->redirectToRoute('app_competition_competitionlist',array("saison"=>$saison));
+    }
+
+    /**
+     * @Route("/Competition/{id}/addC", name="addCompetiteurCompetition")
+     */
+    public function addCompetiteurCompetitionView(Request $request,Competition $competition){
+
+        $form 			= $this->createForm(AddCompititeurCompetitionType::class);
+        $form->handleRequest($request);
+        $saison = $request->query->get('saison');
+        if ($form->isSubmitted()&&$form->isValid()) {
+            // print_r("good t");
+            $em=$this->getDoctrine()->getManager();
+            $userRepository = $em->getRepository(User::class);
+            foreach ($request->request->get("add_compititeur_competition")["Tireurs"] as $tireurId)
+            {
+                //print_r($tireurId);
+                $tireur = $userRepository->findOneBy(['id'=>$tireurId]);
+                $competitionCompetiteur = new CompetitionCompetiteur();
+                $competitionCompetiteur->setCompetition($competition);
+                $competitionCompetiteur->setProfil($tireur);
+                $tireur->addCompetiteurCompetition($competitionCompetiteur);
+                $competition->addCompetitionCompetiteur($competitionCompetiteur);
+                $em->persist($tireur);
+                $em->persist($competition);
+                $em->persist($competitionCompetiteur);
+
+            }
+            $em->flush();
+            return $this->redirectToRoute('app_competition_competitionview',array("id"=>$competition->getId(),"saison"=>$saison));
+        }
+
+
+        return $this->render('entrainement/entrainementVueAddT.html.twig', [
+            'competition' => $competition,
+            'form' => $form->createView(),
+            'saison' => $saison,
+        ]);
+    }
+
+    /**
+     * @Route("/Competition/{id}/supprimerC", requirements={"id":"\d+"}, name="deleteCompetitionC")
+     */
+    public function deleteEntrainementTireurAction(CompetitionCompetiteur $competitionCompetiteur,Request $request)
+    {
+        $token = $request->query->get('token');
+        $saison = $request->query->get('saison');
+        if (!$this->isCsrfTokenValid('COMPETITION_DELETEC',$token))
+        {
+            throw $this->createAccessDeniedException();
+        }
+        $em=$this->getDoctrine()->getManager();
+        $ide = $competitionCompetiteur->getCompetition()->getId();
+        $em->remove($competitionCompetiteur);
+        $em->flush();
+        return $this->redirectToRoute('app_competition_competitionview',array("id"=>$ide,"saison"=>$saison));
+    }
+
+    /**
+     * @Route("/Competition/{id}/addE", name="addEncadrantCompetition")
+     */
+    public function addEncadrantCompetitionView(Request $request,Competition $competition){
+
+        $form 			= $this->createForm(AddEncadrantCompetitionType::class);
+        $saison = $request->query->get('saison');
+        $form->handleRequest($request);
+        if ($form->isSubmitted()&&$form->isValid()) {
+            print_r("good m");
+            $em=$this->getDoctrine()->getManager();
+            $userRepository = $em->getRepository(User::class);
+            foreach ($request->request->get("entrainement_add_ma")["MAs"] as $tireurId)
+            {
+                //print_r($tireurId);
+                $ma = $userRepository->findOneBy(['id'=>$tireurId]);
+                $competition->addEncadrant($ma);
+                $em->persist($competition);
+                $em->flush();
+                return $this->redirectToRoute('app_entrainement_entrainementview',array("id"=>$competition->getId(),"saison"=>$saison));
+            }
+        }
+
+
+        return $this->render('entrainement/entrainementVueAddM.html.twig', [
+            'competition' => $competition,
+            'form' => $form->createView(),
+            'saison' => $saison,
+        ]);
     }
 
 }
