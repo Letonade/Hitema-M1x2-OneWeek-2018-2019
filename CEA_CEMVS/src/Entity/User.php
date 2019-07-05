@@ -124,6 +124,11 @@ class User implements UserInterface
      */
     private $tireurGroupe;
 
+    /**
+     * @ORM\OneToMany(targetEntity="CompetitionCompetiteur", mappedBy="profil")
+     */
+    private $competiteurCompetitions;
+
     public function __construct()
     {
         $this->auteurObjectifs = new ArrayCollection();
@@ -135,6 +140,7 @@ class User implements UserInterface
         $this->maLecons = new ArrayCollection();
         $this->tireurLecons = new ArrayCollection();
         $this->arbitres = new ArrayCollection();
+        $this->competiteurCompetitions= new ArrayCollection();
 
     }
     public function __toString(){
@@ -567,6 +573,35 @@ class User implements UserInterface
         $this->tireurGroupe = $tireurGroupe;
     }
 
+    public function addCompetiteurCompetition(CompetitionCompetiteur $competitionCompetiteur) : User
+    {
+        if($this->competiteurCompetitions->contains($competitionCompetiteur)){
+            return $this;
+        }
+        $this->competiteurCompetitions->add($competitionCompetiteur);
+        $competitionCompetiteur->setProfil($this);
+        return $this;
+    }
+
+    public function removeCompetiteurCompetition(CompetitionCompetiteur $competitionCompetiteur) : User
+    {
+        if (!$this->competiteurCompetitions->contains($competitionCompetiteur))
+        {
+            return $this;
+        }
+        $this->competiteurCompetitions->removeElement($competitionCompetiteur);
+        $competitionCompetiteur->setProfil(null);
+        return $this;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompetiteurCompetitions()
+    {
+        return $this->competiteurCompetitions;
+    }
 
 
 

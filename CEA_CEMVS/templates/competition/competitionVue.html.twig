@@ -33,19 +33,46 @@ Entrainements
                 <th>Prenom</th>
                 <th>Login</th>
                 <th>Place</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th><a class="btn btn-success" href="{{ path('addCompetiteurCompetition', {id : Competition.id, saison:saison}) }}">Ajout de competiteur</a></th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% set token = csrf_token('COMPETITION_DELETEC') %}
+            {% for competiteur in competiteurs %}
+                <tr>
+                    <td>{{ competiteur.profil.nom }}</td>
+                    <td>{{ competiteur.profil.prenom }}</td>
+                    <td>{{ competiteur.profil.login }}</td>
+                    <td>{{ competiteur.Placement }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a class="btn btn-danger" href="{{ path('deleteCompetitionC',{id:competiteur.id,token:token, saison:saison}) }}">Supprimer</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Login</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th><a class="btn btn-success" href="{{ path('addEncadrantCompetition', {id : Competition.id, saison:saison}) }}">Ajout d'encadrant</a></th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
             {% set token = csrf_token('COMPETITION_DELETE') %}
-            {% set tokent = csrf_token('COMPETITION_SINSCRIRET') %}
-            {% set tokenm = csrf_token('COMPETITION_SINSCRIREM') %}
-            {% for competiteur in competiteurs %}
+            {% for encadrant in encadrants %}
                 <tr>
-                    <td><a href="{{ path('app_competition_competitionview',{id:Competition.id, saison:saison}) }}">{{ Competition.id }}</a></td>
-                    <td>{{ competiteur.profil.nom }}</td>
-                    <td>{{ competiteur.profil.prenom }}</td>
-                    <td>{{ Competition.profil.login }}</td>
-                    <td>{{ Competition.Place }}</td>
+                    <td>{{ encadrant.nom }}</td>
+                    <td>{{ encadrant.prenom }}</td>
+                    <td>{{ encadrant.login }}</td>
                     {% if is_granted('ROLE_ADMIN') %}
                         <td><a class="btn btn-danger" href="{{ path('deleteCompetition',{id:Competition.id,token:token, saison:saison}) }}">Supprimer</a></td>
                     {% endif %}
