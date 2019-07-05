@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Competition;
+use App\Entity\CompetitionCompetiteur;
 use App\Form\CompetitionType;
 use App\Form\DateCalendarCompetitionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -110,9 +111,52 @@ class CompetitionController extends Controller
      * @Route("/Competition/{id}")
      */
     public function CompetitionView(Request $request,Competition $competition){
-       
+
+        $competiteurs = $competition->getCompetiteurCompetitions();
+        $saison = $request->query->get('saison');
         return $this->render('competition/competitionVue.html.twig', [
             'Competition' => $competition,
+            'competiteurs' => $competiteurs,
+            "saison"=>$saison,
         ]);
     }
+
+    /**
+     * @Route("/Competition/{id}/sinscrirerT", requirements={"id":"\d+"}, name="sinsrireCompetitionT")
+     */
+    public function sinscrireTCompetitionAction(Competition $competition,Request $request)
+    {
+        $token = $request->query->get('token');
+        $saison = $request->query->get('saison');
+        if (!$this->isCsrfTokenValid('COMPETITION_SINSCRIRET',$token))
+        {
+            throw $this->createAccessDeniedException();
+        }
+        $em=$this->getDoctrine()->getManager();
+        $competitionCompetiteur = new CompetitionCompetiteur();
+        $competitionCompetiteur->setProfil($this->getUser());
+        $competitionCompetiteur->setCompetition($competition);
+        $em->persist($competitionCompetiteur);
+        $em->flush();
+        return $this->redirectToRoute('app_competition_competitionlist',array("saison"=>$saison));
+    }
+
+    /**
+     * @Route("/Competition/{id}/sinscrirerM", requirements={"id":"\d+"}, name="sinsrireCompetitionM")
+     */
+    public function sinscrireMCompetitionAction(Competition $competition,Request $request)
+    {
+        $token = $request->query->get('token');
+        $saison = $request->query->get('saison');
+        if (!$this->isCsrfTokenValid('COMPETITION_SINSCRIREM',$token))
+        {
+            throw $this->createAccessDeniedException();
+        }
+        $em=$this->getDoctrine()->getManager();
+        $competition->addEncadrant($this->getUser());
+        $em->persist($competition);
+        $em->flush();
+        return $this->redirectToRoute('app_competition_competitionlist',array("saison"=>$saison));
+    }
+
 }

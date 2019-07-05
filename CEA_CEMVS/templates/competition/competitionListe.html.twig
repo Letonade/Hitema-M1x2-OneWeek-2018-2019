@@ -9,6 +9,7 @@ Entrainements
         <table class="table table-bordered">
             <thead>
             <tr>
+                <th>#</th>
                 <th>Nom</th>
 				<th>Date</th>
 				<th>Heure de début</th>
@@ -17,14 +18,23 @@ Entrainements
             </thead>
             <tbody>
             {% set token = csrf_token('COMPETITION_DELETE') %}
+            {% set tokent = csrf_token('COMPETITION_SINSCRIRET') %}
+            {% set tokenm = csrf_token('COMPETITION_SINSCRIREM') %}
             {% for Competition in Competitions %}
                 <tr>
+                    <td><a href="{{ path('app_competition_competitionview',{id:Competition.id, saison:saison}) }}">{{ Competition.id }}</a></td>
                     <td>{{ Competition.nom }}</td>
 					<td>{{ Competition.DateFin|date('Y-m-d') }}</td>
 					<td>{{ Competition.DateDebut|date('H:i:s') }}</td>
 					<td>{{ Competition.DateFin|date('H:i:s') }}</td>
 					{% if is_granted('ROLE_ADMIN') %}
 						<td><a class="btn btn-danger" href="{{ path('deleteCompetition',{id:Competition.id,token:token, saison:saison}) }}">Supprimer</a></td>
+                    {% endif %}
+                    {% if is_granted('ROLE_TIREUR') and app.user not in Competition.CompetiteurCompetitionUsers %}
+                        <td><a class="btn btn-success" href="{{ path('sinsrireCompetitionT',{id:Competition.id,token:tokent, saison:saison}) }}">Participer</a></td>
+                    {% endif %}
+                    {% if is_granted('ROLE_MA') and app.user not in Competition.encadrants %}
+                        <td><a class="btn btn-success" href="{{ path('sinsrireCompetitionM',{id:Competition.id,token:tokenm, saison:saison}) }}">Encadrer</a></td>
                     {% endif %}
                 </tr>
             {% endfor %}

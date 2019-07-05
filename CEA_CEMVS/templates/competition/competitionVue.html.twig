@@ -16,16 +16,41 @@ Entrainements
             </tr>
             </thead>
             <tbody>
-            {% set token = csrf_token('ENTRAINEMENT_DELETE') %}
 			<tr>
                 <td>{{ Competition.nom }}</td>
 				<td>{{ Competition.DateFin|date('Y-m-d') }}</td>
 				<td>{{ Competition.DateDebut|date('H:i:s') }}</td>
 				<td>{{ Competition.DateFin|date('H:i:s') }}</td>
-				{% if is_granted('ROLE_ADMIN') %}
-					<td><a class="btn btn-danger" href="{{ path('deleteCompetition',{id:Competition.id,token:token, saison:2019}) }}">Supprimer</a></td>
-                {% endif %}
 			</tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Login</th>
+                <th>Place</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set token = csrf_token('COMPETITION_DELETE') %}
+            {% set tokent = csrf_token('COMPETITION_SINSCRIRET') %}
+            {% set tokenm = csrf_token('COMPETITION_SINSCRIREM') %}
+            {% for competiteur in competiteurs %}
+                <tr>
+                    <td><a href="{{ path('app_competition_competitionview',{id:Competition.id, saison:saison}) }}">{{ Competition.id }}</a></td>
+                    <td>{{ competiteur.profil.nom }}</td>
+                    <td>{{ competiteur.profil.prenom }}</td>
+                    <td>{{ Competition.profil.login }}</td>
+                    <td>{{ Competition.Place }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a class="btn btn-danger" href="{{ path('deleteCompetition',{id:Competition.id,token:token, saison:saison}) }}">Supprimer</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
