@@ -70,5 +70,13 @@ class Arbitre
         return $this;
     }
 
+    /**
+     * @return User
+     */
+    public function getProfils(): User
+    {
+        return $this->profils;
+    }
+
 
 }

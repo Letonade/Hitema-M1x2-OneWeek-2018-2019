@@ -196,7 +196,15 @@ class Competition
         return $this->competiteurCompetitions;
     }
 
-
+    public function getCompetiteurCompetitionUsers()
+    {
+        $return = null;
+        foreach ($this->competiteurCompetitions as $k=>$profil)
+        {
+            $return[$k]=$profil->getProfil();
+        }
+        return $return;
+    }
 
     /**
      * @return mixed
