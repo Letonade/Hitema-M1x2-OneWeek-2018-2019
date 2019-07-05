@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Arbitre{% endblock %}
+
+{% block body %}
+    <h1>Arbitre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ arbitre.id }}</td>
+            </tr>
+            <tr>
+                <th>profils</th>
+                <td>{{ arbitre.profils}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('arbitre_index') }}">back to list</a>
+
+    <a href="{{ path('arbitre_edit', {'id': arbitre.id}) }}">edit</a>
+
+{% endblock %}

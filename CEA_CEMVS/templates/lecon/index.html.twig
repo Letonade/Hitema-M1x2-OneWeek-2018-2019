@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Leçons{% endblock %}
+
+{% block body %}
+    <h1>Mes Leçons</h1>
+
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tireur</th>
+                <th>Maitre d'arme</th>
+                <th>Entraînement</th>
+                <th>Commentairestireurs</th>
+                <th>CommentairesMa</th>
+                <th>Present</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lecon in lecons %}
+            <tr>
+                <td>{{ lecon.tireur }}</td>
+                <td>{{ lecon.ma }}</td>
+                
+                <td>{{ lecon.texte_tireur}}</td>
+                <td>{{ lecon.texte_maitre}}</td>
+                <td>{{ lecon.presence ? 1 : 2 }}</td>
+               
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Vous n'avez pas encore de leçons</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

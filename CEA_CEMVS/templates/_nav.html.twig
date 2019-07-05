@@ -18,17 +18,17 @@
       <li class="nav-item">
         <a class="nav-link" href="{{ path('groupe_index')}}">Groupes</a>
       </li>
-       {#
+       
       <li class="nav-item">
-        <a class="nav-link" href="#">Leçons</a>
-      </li>#}
+        <a class="nav-link" href="{{path('arbitre_index')}}">Arbitre</a>
+      </li>
      
       <li class="nav-item">
         <a class="nav-link" href="{{ path('objectifs_index')}}">Objectif</a>
-      </li>{#}
+      </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{path('users_index')}}">Utilisateurs</a>
-      </li>#}
+        <a class="nav-link" href="{{path('lecon_index')}}">lecon</a>
+      </li>
      
     </ul>
     {% if app.user %}

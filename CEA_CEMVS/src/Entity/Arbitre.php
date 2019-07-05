@@ -34,7 +34,7 @@ class Arbitre
     /**
      * @return ArbitreNiveau
      */
-    public function getNiveau(): ArbitreNiveau
+    public function getNiveau(): ?ArbitreNiveau
     {
         return $this->niveau;
     }

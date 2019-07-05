@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Arbitre index{% endblock %}
+
+{% block body %}
+    <h1>Arbitre index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Niveau arbitre</th>
+                <th>profils</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for arbitre in arbitres %}
+            <tr>
+                <td>{{ arbitre.niveau }}</td>
+                <td>{{ arbitre.profils }}</td>
+                <td>
+                    <a href="{{ path('arbitre_show', {'id': arbitre.id}) }}">show</a>
+                    <a href="{{ path('arbitre_edit', {'id': arbitre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('arbitre_new') }}">Create new</a>
+{% endblock %}
