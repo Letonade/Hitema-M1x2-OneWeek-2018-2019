@@ -18,7 +18,7 @@ class LeconController extends AbstractController
     /**
      * @Route("/",name ="lecon_index", methods={"GET"})
      */
-    public function index(LeconRepository $leconRepository): Response
+    public function index(LeconRepository $leconRepository)
     {
      
         return $this->render('lecon/index.html.twig', [
