@@ -10,16 +10,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfilController extends Controller
 {
     /**
-     * @Route("/Profils/{type}")
+     * @Route("/Profils")
      */
-    public function ProfilsList(Request $request, $type){
+    public function ProfilsList(Request $request){
         $em=$this->getDoctrine()->getManager();
         $ProfilsRepository      = $em->getRepository(User::class);
         $Profils                = $ProfilsRepository->findAll();
 
         return $this->render('profil/profilListe.html.twig', [
             'Profils' => $Profils,
-            'type' => $type,
         ]);
     }
 

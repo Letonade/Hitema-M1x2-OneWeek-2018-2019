@@ -20,9 +20,9 @@ Profils
             <tbody>
             {% set token = csrf_token('ENTRAINEMENT_DELETE') %}
             {% for Profil in Profils %}
-            	{% if is_granted('ROLE_ADMIN') %}
-					<td><a class="btn btn-danger" href="{{ path('deleteEntrainement',{id:Entrainement.id,token:token, saison:saison}) }}">Supprimer</a></td>
-                    
+            	{% if is_granted('ROLE_ADMIN') 
+            	or ( Profil.role == 1 and is_granted('ROLE_MA')) 
+            	%}                    
                 <tr>
 					<td>{{ Profil.login }}</td>
 					<td>{{ Profil.nom }}</td>

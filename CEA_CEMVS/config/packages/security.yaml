@@ -1,9 +1,9 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
 
-    role_hierarchy:
-        ROLE_MA: [ROLE_TIREUR]
-        ROLE_ADMIN: [ROLE_MA]
+    #role_hierarchy:
+    #    ROLE_MA: [ROLE_TIREUR]
+    #    ROLE_ADMIN: [ROLE_MA]
 
     providers:
         chain_provider:

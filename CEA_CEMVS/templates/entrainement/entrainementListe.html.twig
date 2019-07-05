@@ -35,7 +35,7 @@ Entrainements
 					{% if is_granted('ROLE_ADMIN') %}
 						<td><a class="btn btn-danger" href="{{ path('deleteEntrainement',{id:Entrainement.id,token:token, saison:saison}) }}">Supprimer</a></td>
                     {% endif %}
-					{% if is_granted('ROLE_TIREUR') and app.user not in Entrainement.tireurProfilUsers %}
+					{% if is_granted('ROLE_TIREUR') and app.user not in Entrainement.tireurProfilUsers and not is_granted('ROLE_MA') %}
 						<td><a class="btn btn-success" href="{{ path('sinsrireEntrainement',{id:Entrainement.id,token:token2, saison:saison}) }}">S'inscrire</a></td>
 					{% endif %}
                 </tr>
