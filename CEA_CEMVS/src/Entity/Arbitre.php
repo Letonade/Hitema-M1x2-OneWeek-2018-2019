@@ -30,7 +30,6 @@ class Arbitre
         $this->profils = new ArrayCollection();
     }
 
-
     /**
      * @return ArbitreNiveau
      */
@@ -75,6 +74,5 @@ class Arbitre
     {
         return $this->profils;
     }
-
 
 }

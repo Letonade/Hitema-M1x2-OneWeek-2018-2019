@@ -6,7 +6,7 @@
     {{form_widget(form) }}
     {{ form_end(form) }}
 
-	{% if is_granted('ROLE_ADMIN') %}
+	{% if not is_granted('ROLE_ADMIN') %}
 		<script type="text/javascript">
 				document.getElementById("date_calendar_entrainement_Ajout").style.display = "none";		
 		</script>

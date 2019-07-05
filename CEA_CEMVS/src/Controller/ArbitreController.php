@@ -16,10 +16,13 @@ class ArbitreController extends AbstractController
     /**
      * @Route("/", name="arbitre_index", methods={"GET"})
      */
-    public function index(ArbitreRepository $arbitreRepository): Response
+    public function index(): Response
     {
+        $em=$this->getDoctrine()->getManager();
+        $arbitreRepository = $em->getRepository(Arbitre::class);
+        $arbitres = $arbitreRepository->findAll();
         return $this->render('arbitre/index.html.twig', [
-            'arbitres' => $arbitreRepository->findAll(),
+            'arbitres' => $arbitres,
         ]);
     }
     /**

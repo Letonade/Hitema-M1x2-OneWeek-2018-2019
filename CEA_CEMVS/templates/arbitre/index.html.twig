@@ -15,19 +15,30 @@
         </thead>
         <tbody>
         {% for arbitre in arbitres %}
-            <tr>
-                <td>{{ arbitre.niveau }}</td>
-                <td>{{ arbitre.profils }}</td>
-                <td>
-                    <a href="{{ path('arbitre_show', {'id': arbitre.id}) }}">show</a>
-                    <a href="{{ path('arbitre_edit', {'id': arbitre.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
+        <tr>
+            <td>
+                {{ arbitre.niveau.nom }}
+            </td>
+            <td>
+            {% for p in arbitre.profils %}
+                {{ p.login }}
+            {% endfor %}
+            </td>
+        </tr>
+            {#% for p in arbitre.profils %}
+                <tr>
+                    <td>;:{{ p.nom }}</td>
+                    <td>
+                        <a href="{{ path('arbitre_show', {'id': arbitre.id}) }}">show</a>
+                        <a href="{{ path('arbitre_edit', {'id': arbitre.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+        #}{% endfor %}
         </tbody>
     </table>
 
