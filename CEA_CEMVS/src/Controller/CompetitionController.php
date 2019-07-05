@@ -229,17 +229,17 @@ class CompetitionController extends Controller
         $saison = $request->query->get('saison');
         $form->handleRequest($request);
         if ($form->isSubmitted()&&$form->isValid()) {
-            print_r("good m");
+            //print_r("good m");
             $em=$this->getDoctrine()->getManager();
             $userRepository = $em->getRepository(User::class);
-            foreach ($request->request->get("entrainement_add_ma")["MAs"] as $tireurId)
+            foreach ($request->request->get("add_encadrant_competition")["MAs"] as $tireurId)
             {
                 //print_r($tireurId);
                 $ma = $userRepository->findOneBy(['id'=>$tireurId]);
                 $competition->addEncadrant($ma);
                 $em->persist($competition);
                 $em->flush();
-                return $this->redirectToRoute('app_entrainement_entrainementview',array("id"=>$competition->getId(),"saison"=>$saison));
+                return $this->redirectToRoute('app_competition_competitionview',array("id"=>$competition->getId(),"saison"=>$saison));
             }
         }
 
@@ -249,6 +249,27 @@ class CompetitionController extends Controller
             'form' => $form->createView(),
             'saison' => $saison,
         ]);
+    }
+
+    /**
+     * @Route("/Competition/{id}/supprimerM", requirements={"id":"\d+"}, name="deleteCompetitionM")
+     */
+    public function deleteEntrainementMaAction(User $user,Request $request)
+    {
+        $token = $request->query->get('token');
+        $saison = $request->query->get('saison');
+        $ide = $request->query->get('ide');
+        if (!$this->isCsrfTokenValid('COMPETITION_DELETEM',$token))
+        {
+            throw $this->createAccessDeniedException();
+        }
+        $em=$this->getDoctrine()->getManager();
+        $entrainementRepository = $em->getRepository(Competition::class);
+        $ent = $entrainementRepository->findOneBy(['id'=>$ide]);
+        $user->removeEncadrantCompetition($ent);
+        $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('app_competition_competitionview',array("id"=>$ide,"saison"=>$saison));
     }
 
 }

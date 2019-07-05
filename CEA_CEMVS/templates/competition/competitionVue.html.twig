@@ -67,14 +67,14 @@ Entrainements
             </tr>
             </thead>
             <tbody>
-            {% set token = csrf_token('COMPETITION_DELETE') %}
+            {% set token = csrf_token('COMPETITION_DELETEM') %}
             {% for encadrant in encadrants %}
                 <tr>
                     <td>{{ encadrant.nom }}</td>
                     <td>{{ encadrant.prenom }}</td>
                     <td>{{ encadrant.login }}</td>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <td><a class="btn btn-danger" href="{{ path('deleteCompetition',{id:Competition.id,token:token, saison:saison}) }}">Supprimer</a></td>
+                        <td><a class="btn btn-danger" href="{{ path('deleteCompetitionM',{id:encadrant.id, ide:Competition.id ,token:token, saison:saison}) }}">Supprimer</a></td>
                     {% endif %}
                 </tr>
             {% endfor %}

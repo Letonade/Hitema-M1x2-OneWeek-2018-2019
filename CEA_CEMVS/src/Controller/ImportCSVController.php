@@ -41,10 +41,6 @@ class ImportCSVController extends Controller
                         }
                     }
                 }
-                // foreach ($user_table as $user_unit) {
-                //     print_r($user_unit);
-                //     print_r("<br>");
-                // }//Vision sur la data
                 fclose($fichier);
             }
 
@@ -81,9 +77,6 @@ class ImportCSVController extends Controller
       ]);
 
 
-        /*return $this->render('security/connexion.html.twig',[
-            'error'=> $utils->getLastAuthenticationError(),
-            'last_username'=>$utils->getLastUsername(),
-        ]);*/
+
     }
 }

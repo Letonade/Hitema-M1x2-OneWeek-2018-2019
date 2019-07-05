@@ -18,7 +18,7 @@ class AddEncadrantCompetitionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('Ma', EntityType::class, array(
+        $builder->add('MAs', EntityType::class, array(
             'class'=> User::class,
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')
