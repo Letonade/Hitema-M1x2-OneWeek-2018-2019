@@ -9,6 +9,7 @@ Profils
         <table class="table table-bordered">
             <thead>
             <tr>
+                <th>#</th>
 				<th>Login</th>
 				<th>Nom</th>
 				<th>Prenom</th>
@@ -24,6 +25,7 @@ Profils
             	or ( Profil.role == 1 and is_granted('ROLE_MA')) 
             	%}                    
                 <tr>
+                    <td><a href="{{ path('app_profil_profilsvue',{id:Profil.id}) }}">{{ Profil.id }}</a></td>
 					<td>{{ Profil.login }}</td>
 					<td>{{ Profil.nom }}</td>
 					<td>{{ Profil.prenom }}</td>

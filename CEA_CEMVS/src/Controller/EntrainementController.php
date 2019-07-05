@@ -257,6 +257,27 @@ class EntrainementController extends Controller
     }
 
     /**
+     * @Route("/Entrainement/{id}/presenceT", requirements={"id":"\d+"}, name="presenceEntrainementTireur")
+     */
+    public function presenceEntrainementTireurAction(EntrainementTireur $entrainementTireur,Request $request)
+    {
+        $token = $request->query->get('token');
+        $saison = $request->query->get('saison');
+        if (!$this->isCsrfTokenValid('ENTRAINEMENTTIREUR_PRESENCE',$token))
+        {
+            throw $this->createAccessDeniedException();
+        }
+        $em=$this->getDoctrine()->getManager();
+        $ide = $entrainementTireur->getEntrainement()->getId();
+
+        if ($entrainementTireur->getPresence()){$entrainementTireur->setPresence(0);}
+        else{$entrainementTireur->setPresence(1);}
+        $em->persist($entrainementTireur);
+        $em->flush();
+        return $this->redirectToRoute('app_entrainement_entrainementview',array("id"=>$ide,"saison"=>$saison));
+    }
+
+    /**
      * @Route("/Entrainement/{id}/supprimerM", requirements={"id":"\d+"}, name="deleteEntrainementMa")
      */
     public function deleteEntrainementMaAction(User $user,Request $request)

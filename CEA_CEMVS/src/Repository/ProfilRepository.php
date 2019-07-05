@@ -19,6 +19,8 @@ class ProfilRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    
+
     // /**
     //  * @return Profil[] Returns an array of Profil objects
     //  */

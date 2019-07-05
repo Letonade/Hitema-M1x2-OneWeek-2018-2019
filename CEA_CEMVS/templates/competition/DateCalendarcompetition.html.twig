@@ -5,6 +5,12 @@
     {{ form_start(form) }}
     {{form_widget(form) }}
     {{ form_end(form) }}
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<script type="text/javascript">
+				document.getElementById("date_calendar_competition_Ajout").style.display = "none";		
+		</script>
+	{% endif %}
 {% endblock %}
 
 {% block title %}

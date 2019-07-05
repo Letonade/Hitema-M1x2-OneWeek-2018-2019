@@ -52,6 +52,7 @@ Entrainements
 			<tbody>
 
 			{% set tokent = csrf_token('ENTRAINEMENTTIREUR_DELETE') %}
+			{% set tokenp = csrf_token('ENTRAINEMENTTIREUR_PRESENCE') %}
 			{% for Profil in Profils %}
 			<tr>
 				<td>{{ Profil.tireur.nom }}</td>
@@ -60,6 +61,12 @@ Entrainements
 				<td>{% if Profil.presence %} Present {% else %} Non present {% endif %}</td>
 				{% if is_granted('ROLE_ADMIN') %}
 					<td><a class="btn btn-danger" href="{{ path('deleteEntrainementTireur',{id:Profil.id,token:tokent, saison:saison}) }}">Supprimer</a></td>
+					<td>{% if Profil.presence %}
+							<a class="btn btn-danger" href="{{ path('presenceEntrainementTireur',{id:Profil.id,token:tokenp, saison:saison}) }}">Supprimer Présence</a>
+						{% else %}
+							<a class="btn btn-success" href="{{ path('presenceEntrainementTireur',{id:Profil.id,token:tokenp, saison:saison}) }}">Marquer présent</a>
+						{% endif %}
+					</td>
 				{% endif %}
 			</tr>
 			{% endfor %}
