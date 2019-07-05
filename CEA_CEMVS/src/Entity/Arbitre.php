@@ -70,10 +70,8 @@ class Arbitre
         return $this;
     }
 
-    /**
-     * @return User
-     */
-    public function getProfils(): User
+ 
+    public function getProfils()
     {
         return $this->profils;
     }
